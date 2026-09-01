@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Z/HOUND</title>
+    <link rel="stylesheet" href="/static/app.css?v=20260901b" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="mark">ZH</span>
+          <span class="wordmark" data-i18n="brand">Z/HOUND</span>
+        </div>
+        <div class="ops-cluster">
+          <p class="ops" data-i18n="operations">IOC COLLECTION OPERATIONS</p>
+          <p class="mode"><span class="live-dot" aria-hidden="true"></span><span data-i18n="localMode">LOCAL / AIR-GAPPED</span></p>
+        </div>
+        <div class="actions">
+          <button type="button" id="theme-toggle" class="chip"></button>
+          <button type="button" id="lang-toggle" class="chip"></button>
+          <button type="button" id="run-collection" class="primary"></button>
+        </div>
+      </header>
+      <div class="workspace">
+        <nav class="sidenav" aria-label="Primary">
+          <a href="#/control" data-nav="control" data-i18n="navControl">01 CONTROL</a>
+          <a href="#/sources" data-nav="sources" data-i18n="navSources">02 SOURCES</a>
+          <a href="#/runs" data-nav="runs" data-i18n="navRuns">03 RUNS</a>
+          <a href="#/review" data-nav="review" data-i18n="navReview">04 REVIEW</a>
+        </nav>
+        <main role="main">
+          <p id="banner" class="banner" hidden></p>
+          <section data-view="control" class="view">
+            <div class="hero">
+              <div>
+                <p class="kicker" data-i18n="sectorLive">SECTOR 01 / LIVE OPERATIONS</p>
+                <h1 data-i18n="collectionControl">COLLECTION CONTROL</h1>
+              </div>
+              <dl class="run-meta" id="run-meta"></dl>
+            </div>
+            <div class="metrics" id="metrics"></div>
+            <div class="split">
+              <section class="panel" aria-labelledby="lanes-title">
+                <div class="panel-head">
+                  <h2 id="lanes-title" data-i18n="executionLanes">A/01 EXECUTION LANES</h2>
+                  <p id="lane-count" class="muted"></p>
+                </div>
+                <div id="lanes" class="lanes"></div>
+              </section>
+              <section class="panel" aria-labelledby="attention-title">
+                <div class="panel-head">
+                  <h2 id="attention-title" data-i18n="attention">A/02 ALERTS</h2>
+                  <p id="signal-count" class="muted"></p>
+                </div>
+                <div id="attention" class="attention"></div>
+              </section>
+            </div>
+            <div class="split">
+              <section class="panel" aria-labelledby="field-title">
+                <div class="panel-head">
+                  <h2 id="field-title" data-i18n="sourceField">B/01 SOURCE FIELD</h2>
+                  <p class="muted" data-i18n="selectNode">SELECT NODE / INSPECT</p>
+                </div>
+                <div id="source-field" class="source-field"></div>
+              </section>
+              <section class="panel terminal" aria-labelledby="stream-title">
+                <div class="panel-head">
+                  <h2 id="stream-title" data-i18n="eventStream">B/02 EVENT STREAM</h2>
+                  <p class="muted" data-i18n="tail">TAIL / 05</p>
+                </div>
+                <div id="event-stream" class="event-stream"></div>
+              </section>
+            </div>
+          </section>
+          <section data-view="sources" class="view" hidden>
+            <div class="hero">
+              <div>
+                <p class="kicker" data-i18n="sourcesSector"></p>
+                <h1 data-i18n="sourcesTitle"></h1>
+              </div>
+              <button type="button" id="validate-sources" class="chip"></button>
+            </div>
+            <div class="table-wrap"><table id="sources-table"></table></div>
+          </section>
+          <section data-view="runs" class="view" hidden>
+            <div class="hero">
+              <div>
+                <p class="kicker" data-i18n="runsSector"></p>
+                <h1 data-i18n="runsTitle"></h1>
+              </div>
+            </div>
+            <div class="table-wrap"><table id="runs-table"></table></div>
+          </section>
+          <section data-view="review" class="view" hidden>
+            <div class="hero">
+              <div>
+                <p class="kicker" data-i18n="reviewSector"></p>
+                <h1 data-i18n="reviewTitle"></h1>
+              </div>
+            </div>
+            <div id="review-list" class="review-list"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="/static/i18n.js?v=20260901b"></script>
+    <script src="/static/app.js?v=20260901b"></script>
+  </body>
+</html>
