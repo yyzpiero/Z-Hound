@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import deque
 from datetime import datetime, timezone
+import json
 import queue
 import threading
 from typing import Callable
@@ -11,7 +12,7 @@ from ..persistence.csv_repository import iso_now
 from ..pipeline import CollectOptions
 
 
-TERMINAL_EVENTS = frozenset({"run_completed", "run_failed"})
+TERMINAL_EVENTS = frozenset({"run_completed", "run_failed", "run_cancelled"})
 PROGRESS_EVENTS = frozenset(
     {
         "run_started",
@@ -19,12 +20,17 @@ PROGRESS_EVENTS = frozenset(
         "source_completed",
         "run_completed",
         "run_failed",
+        "run_cancelled",
         "failure_recorded",
     }
 )
 
 
 class JobConflict(RuntimeError):
+    pass
+
+
+class NoActiveJob(RuntimeError):
     pass
 
 
@@ -52,6 +58,7 @@ class CollectionJobManager:
                 "run_id": None,
                 "state": "running",
                 "done": threading.Event(),
+                "cancel": threading.Event(),
                 "options": options,
                 "started_at": iso_now(self._clock()),
                 "updated_at": iso_now(self._clock()),
@@ -91,6 +98,35 @@ class CollectionJobManager:
                 "sources": [dict(row) for row in (handle.get("sources") or {}).values()],
             }
 
+    def is_cancelled(self) -> bool:
+        with self._lock:
+            handle = self._current
+            if handle is None:
+                return False
+            cancel = handle.get("cancel")
+            return bool(cancel is not None and cancel.is_set())
+
+    def request_stop(self) -> dict:
+        with self._lock:
+            handle = self._current
+            if handle is None or handle["done"].is_set():
+                raise NoActiveJob("no active collection job")
+            handle["cancel"].set()
+            handle["state"] = "stopping"
+            handle["updated_at"] = iso_now(self._clock())
+            return {
+                "run_id": handle.get("run_id"),
+                "state": handle.get("state"),
+                "started_at": handle.get("started_at"),
+                "updated_at": handle.get("updated_at"),
+                "completed": int(handle.get("completed") or 0),
+                "failed": int(handle.get("failed") or 0),
+                "reports": int(handle.get("reports") or 0),
+                "accepted": int(handle.get("accepted") or 0),
+                "review": int(handle.get("review") or 0),
+                "sources": [dict(row) for row in (handle.get("sources") or {}).values()],
+            }
+
     def recent_events(self) -> list[dict]:
         with self._event_lock:
             return list(self._events)
@@ -117,6 +153,8 @@ class CollectionJobManager:
                 handle["run_id"] = payload["run_id"]
             if payload.get("type") == "run_started":
                 handle["state"] = "running"
+            elif payload.get("type") == "run_cancelled":
+                handle["state"] = "stopping"
             handle["updated_at"] = payload.get("ts") or iso_now(self._clock())
             event_type = payload.get("type")
             source_id = payload.get("source_id")
@@ -196,3 +234,43 @@ class CollectionJobManager:
             with self._lock:
                 if self._current is handle:
                     self._current = None
+
+
+def iter_job_events(manager: CollectionJobManager, run_id: str):
+    subscriber = manager.subscribe()
+    try:
+        for event in manager.recent_events():
+            if run_id not in {"current", event.get("run_id")}:
+                continue
+            yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
+            if run_id != "current" and event.get("type") in TERMINAL_EVENTS:
+                return
+        current = manager.current()
+        watching_live = run_id == "current" or (
+            current is not None and current.get("run_id") in {run_id, None}
+        )
+        if not watching_live:
+            yield ": heartbeat\n\n"
+            yield (
+                "data: "
+                + json.dumps(
+                    {"type": "run_completed", "run_id": run_id, "replay": True},
+                    ensure_ascii=False,
+                )
+                + "\n\n"
+            )
+            return
+        yield ": heartbeat\n\n"
+        while True:
+            try:
+                event = subscriber.get(timeout=15)
+            except queue.Empty:
+                yield ": heartbeat\n\n"
+                continue
+            if run_id not in {"current", event.get("run_id")}:
+                continue
+            yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
+            if run_id != "current" and event.get("type") in TERMINAL_EVENTS:
+                return
+    finally:
+        manager.unsubscribe(subscriber)

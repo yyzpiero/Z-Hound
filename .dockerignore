@@ -23,3 +23,10 @@ data/.ioc-scraper.lock
 .env
 .DS_Store
 script
+
+# Analyst workspace and local credentials never belong in build context.
+data/hunting.sqlite3*
+data/ioc/
+data/webpage*
+.env.*
+!.env.example

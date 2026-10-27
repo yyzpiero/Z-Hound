@@ -7,6 +7,12 @@ services:
       - ./data:/app/data
     environment:
       IOC_SCRAPER_PROXY: ${IOC_SCRAPER_PROXY:-}
+      IOC_SCRAPER_DATA_DIR: /app/data
+      FOFA_BASE_URL: ${FOFA_BASE_URL:-https://fofa.info}
+      FOFA_EMAIL: ${FOFA_EMAIL:-}
+      FOFA_API_KEY: ${FOFA_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      DEEPSEEK_MODEL: ${DEEPSEEK_MODEL:-deepseek-flash}
     user: "${UID:-1000}:${GID:-1000}"
     healthcheck:
       test:
@@ -21,3 +27,22 @@ services:
       retries: 3
       start_period: 25s
     stop_grace_period: 20s
+  cli:
+    build: .
+    profiles: ["cli"]
+    entrypoint: ["ioc-scraper"]
+    volumes:
+      - ./data:/app/data
+    environment:
+      IOC_SCRAPER_PROXY: ${IOC_SCRAPER_PROXY:-}
+      IOC_SCRAPER_DATA_DIR: /app/data
+      FOFA_BASE_URL: ${FOFA_BASE_URL:-https://fofa.info}
+      FOFA_EMAIL: ${FOFA_EMAIL:-}
+      FOFA_API_KEY: ${FOFA_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      DEEPSEEK_MODEL: ${DEEPSEEK_MODEL:-deepseek-flash}
+    user: "${UID:-1000}:${GID:-1000}"
+    stdin_open: true
+    tty: true
+    healthcheck:
+      disable: true

@@ -2,17 +2,15 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from importlib.resources import files
-import json
 from pathlib import Path
-import queue
 from typing import Any
 
 from .. import __version__
-from ..application import build_services, load_catalog
+from ..application import build_services, load_catalog, resolve_data_dir
 from ..persistence.csv_repository import CsvRepository
 from ..pipeline import CollectOptions
 from ..validation import validate_sources
-from .jobs import CollectionJobManager, JobConflict
+from .jobs import CollectionJobManager, JobConflict, NoActiveJob, iter_job_events
 from .read_models import InvalidRunId, RunNotFound, list_runs, load_overview, load_run_detail, load_sources_view
 from .review import CandidateNotFound, DecisionConflict, decide, list_review
 
@@ -73,8 +71,9 @@ def create_app(
     from fastapi.staticfiles import StaticFiles
     from starlette.exceptions import HTTPException as StarletteHTTPException
 
-    root = Path(data_dir) if data_dir is not None else Path(__file__).resolve().parents[2] / "data"
+    root = Path(data_dir).resolve() if data_dir is not None else resolve_data_dir()
     validate = validator or validate_sources
+    manager_box: dict[str, CollectionJobManager | None] = {"manager": None}
 
     def runner(options: CollectOptions, emit) -> Any:
         selected = set(options.selected_source_ids) or None
@@ -85,9 +84,18 @@ def create_app(
             verbosity=-1,
         )
         services.pipeline.on_event = emit
+        current_manager = manager_box["manager"]
+        if current_manager is not None:
+            services.pipeline.cancel_check = current_manager.is_cancelled
         return services.pipeline.collect(options)
 
     manager = job_manager or CollectionJobManager(runner)
+    manager_box["manager"] = manager
+
+    def job_busy() -> bool:
+        current = manager.current()
+        return bool(current and current.get("state") in {"running", "stopping"})
+
     static_dir = _static_dir()
     app = FastAPI(title="Z/HOUND", version=version, docs_url=None, redoc_url=None)
 
@@ -113,10 +121,12 @@ def create_app(
     @app.get("/api/health")
     def health():
         accessible = root.exists() and root.is_dir()
+        catalog = (root / "source.csv").is_file()
         return {
             "ok": True,
             "version": version,
             "data_dir_accessible": accessible,
+            "catalog_present": catalog,
         }
 
     @app.get("/api/overview")
@@ -129,7 +139,7 @@ def create_app(
     def sources():
         rows = load_sources_view(root)
         current = manager.current()
-        if current and current.get("state") == "running":
+        if current and current.get("state") in {"running", "stopping"}:
             live = {row["source_id"]: row for row in current.get("sources") or []}
             for row in rows:
                 hit = live.get(row["source_id"])
@@ -144,6 +154,8 @@ def create_app(
 
     @app.post("/api/sources/validate")
     def sources_validate(payload: dict[str, Any] | None = None):
+        if job_busy():
+            return _json_error(409, "job_active", "a collection job is already running")
         body = payload or {}
         try:
             selected = set(body.get("source") or []) or None
@@ -188,8 +200,10 @@ def create_app(
     def start_run(payload: dict[str, Any] | None = None):
         try:
             options = _options_from_payload(payload or {})
+            selected = set(options.selected_source_ids) or None
+            load_catalog(root, selected)
             handle = manager.start(options)
-        except ValueError as exc:
+        except (ValueError, FileNotFoundError) as exc:
             return _json_error(400, "invalid_request", str(exc))
         except JobConflict as exc:
             return _json_error(409, "job_active", str(exc))
@@ -203,6 +217,14 @@ def create_app(
     def current_run():
         current = manager.current()
         return current or {"run_id": None, "state": None}
+
+    @app.post("/api/runs/current/stop", status_code=202)
+    def stop_run():
+        try:
+            snapshot = manager.request_stop()
+        except NoActiveJob as exc:
+            return _json_error(404, "no_job", str(exc))
+        return {"run_id": snapshot.get("run_id"), "state": snapshot.get("state")}
 
     @app.get("/api/runs/{run_id}")
     def run_detail(run_id: str):
@@ -225,48 +247,8 @@ def create_app(
                 if not current or current.get("run_id") not in {run_id, None}:
                     return _json_error(404, "run_not_found", "run not found")
 
-        subscriber = manager.subscribe()
-
-        def stream():
-            try:
-                for event in manager.recent_events():
-                    if run_id not in {"current", event.get("run_id")}:
-                        continue
-                    yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
-                    if event.get("type") in {"run_completed", "run_failed"}:
-                        return
-                current = manager.current()
-                watching_live = run_id == "current" or (
-                    current is not None
-                    and current.get("run_id") in {run_id, None}
-                )
-                if not watching_live:
-                    yield ": heartbeat\n\n"
-                    yield (
-                        "data: "
-                        + json.dumps(
-                            {"type": "run_completed", "run_id": run_id, "replay": True},
-                            ensure_ascii=False,
-                        )
-                        + "\n\n"
-                    )
-                    return
-                while True:
-                    try:
-                        event = subscriber.get(timeout=15)
-                    except queue.Empty:
-                        yield ": heartbeat\n\n"
-                        continue
-                    if run_id not in {"current", event.get("run_id")}:
-                        continue
-                    yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
-                    if event.get("type") in {"run_completed", "run_failed"}:
-                        return
-            finally:
-                manager.unsubscribe(subscriber)
-
         return StreamingResponse(
-            stream(),
+            iter_job_events(manager, run_id),
             media_type="text/event-stream",
             headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"},
         )
@@ -300,7 +282,14 @@ def create_app(
 
     @app.get("/")
     def index():
-        return FileResponse(static_dir / "index.html")
+        return FileResponse(
+            static_dir / "index.html",
+            headers={"Cache-Control": "no-store"},
+        )
+
+    from ..hunting.api import install_routes
+
+    install_routes(app, root)
 
     if static_dir.is_dir():
         app.mount("/static", StaticFiles(directory=static_dir), name="static")

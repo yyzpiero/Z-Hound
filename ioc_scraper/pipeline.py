@@ -59,6 +59,7 @@ class CollectorPipeline:
         verbosity: int = 0,
         browser_fetcher=None,
         on_event=None,
+        cancel_check=None,
     ):
         self.registry = list(registry)
         self.discovery = discovery
@@ -70,6 +71,7 @@ class CollectorPipeline:
         self.verbosity = verbosity
         self.browser_fetcher = browser_fetcher
         self.on_event = on_event
+        self.cancel_check = cancel_check
         self._log_lines: list[str] = []
 
     def _fetch_report(self, report) -> FetchResponse:
@@ -114,6 +116,15 @@ class CollectorPipeline:
         if candidate.extraction_method in {"table", "ioc_section"}:
             return "accepted", "structured_ioc_content"
         return "review", "unstructured_document_scan"
+
+    def _cancelled(self) -> bool:
+        check = self.cancel_check
+        if check is None:
+            return False
+        try:
+            return bool(check())
+        except Exception:
+            return False
 
     def _publish(self, event_type: str, timestamp: str, **fields) -> None:
         if self.on_event is None:
@@ -176,7 +187,11 @@ class CollectorPipeline:
             sources=len(sources),
             scope=scope,
         )
+        cancelled = False
         for source_index, source in enumerate(sources, start=1):
+            if self._cancelled():
+                cancelled = True
+                break
             source_started = time.monotonic()
             accepted_before = len(indicator_rows)
             review_before = len(review_rows)
@@ -212,6 +227,9 @@ class CollectorPipeline:
             summary.included_undated_reports += status.included_undated_reports
             source_failures = 0
             for report in reports:
+                if self._cancelled():
+                    cancelled = True
+                    break
                 if report.url in existing_urls and not options.refresh:
                     continue
                 response = self._fetch_report(report)
@@ -448,6 +466,8 @@ class CollectorPipeline:
                 status=status.status,
                 reports=len(reports),
             )
+            if cancelled:
+                break
 
         for status in statuses:
             summary.source_status_counts[status.status] = (
@@ -476,12 +496,13 @@ class CollectorPipeline:
                 now_text,
             )
             self._publish(
-                "run_completed",
+                "run_cancelled" if cancelled else "run_completed",
                 now_text,
                 run_id=run_id,
                 dry_run=True,
                 accepted=unique_indicator_count,
                 review=summary.review_indicators,
+                **({"code": "cancelled"} if cancelled else {}),
             )
             return summary
 
@@ -511,12 +532,13 @@ class CollectorPipeline:
                 log_lines=self._log_lines,
             )
         self._publish(
-            "run_completed",
+            "run_cancelled" if cancelled else "run_completed",
             now_text,
             run_id=run_id,
             accepted=summary.added_indicators,
             duplicates=summary.duplicate_indicators,
             review=summary.review_indicators,
             failures=summary.failures,
+            **({"code": "cancelled"} if cancelled else {}),
         )
         return summary

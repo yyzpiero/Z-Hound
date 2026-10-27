@@ -264,6 +264,19 @@ def _attention(sources: Iterable[SourceView]) -> list[AttentionItem]:
     return items[:ALERT_LIMIT]
 
 
+MISSING_CATALOG_ALERT: AttentionItem = {
+    "priority": "P1",
+    "code": "catalog_missing",
+    "title": "Source catalog missing",
+    "label_en": "Source catalog missing",
+    "label_zh": "缺少来源目录",
+    "status": "blocked",
+    "detail": "Copy data/source.example.csv to data/source.csv",
+    "source_id": None,
+    "url": "",
+}
+
+
 def _pending_review_count(data_dir: Path, latest_run: RunSummaryView | None) -> int:
     if latest_run is None:
         return 0
@@ -298,11 +311,14 @@ def load_overview(data_dir: Path) -> Overview:
         "indicators_observed": len(indicators),
         "review_pending": review_pending,
     }
+    attention = _attention(enabled)
+    if not (Path(data_dir) / "source.csv").is_file():
+        attention = [MISSING_CATALOG_ALERT, *attention][:ALERT_LIMIT]
     return {
         "latest_run": latest,
         "current_job": None,
         "metrics": metrics,
-        "attention": _attention(enabled),
+        "attention": attention,
         "sources": sources,
     }
 

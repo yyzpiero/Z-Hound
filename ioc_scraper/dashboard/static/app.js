@@ -7,7 +7,10 @@
     events: [],
     source: null,
     liveTimer: null,
-    live: { sources: {}, completed: 0, failed: 0, reports: 0, accepted: 0, review: 0 }
+    live: { sources: {}, completed: 0, failed: 0, reports: 0, accepted: 0, review: 0 },
+    reviewItems: [],
+    reviewStatus: "pending",
+    reviewType: ""
   };
 
   const $ = (sel) => document.querySelector(sel);
@@ -26,7 +29,12 @@
     $("#theme-toggle").textContent = state.theme === "dark" ? t("themeToLight") : t("themeToDark");
     $("#lang-toggle").textContent = state.lang === "en" ? t("langToZh") : t("langToEn");
     $("#run-collection").textContent = t("runCollection");
-    $("#validate-sources").textContent = t("validate");
+    const stop = $("#stop-collection");
+    if (stop) stop.textContent = t("stopCollection");
+    const validate = $("#validate-sources");
+    if (validate) validate.textContent = t("validate");
+    const noticeOk = $("#notice-ok");
+    if (noticeOk) noticeOk.textContent = t("noticeOk");
     document.title = t("brand");
   }
 
@@ -58,6 +66,16 @@
     node.textContent = message || "";
   }
 
+  function showNotice(message) {
+    const dialog = $("#notice-dialog");
+    $("#notice-text").textContent = message || "";
+    if (typeof dialog.showModal === "function") {
+      if (!dialog.open) dialog.showModal();
+    } else {
+      dialog.hidden = false;
+    }
+  }
+
   function el(tag, className) {
     const node = document.createElement(tag);
     if (className) node.className = className;
@@ -78,8 +96,17 @@
     return "";
   }
 
+  function jobState(overview) {
+    return (overview && overview.current_job && overview.current_job.state) || "";
+  }
+
+  function isBusy(overview) {
+    const current = jobState(overview);
+    return current === "running" || current === "stopping";
+  }
+
   function isRunning(overview) {
-    return Boolean(overview && overview.current_job && overview.current_job.state === "running");
+    return isBusy(overview);
   }
 
   function liveMap(overview) {
@@ -138,7 +165,7 @@
     }
     if (event.type === "indicator_accepted") state.live.accepted += 1;
     if (event.type === "indicator_reviewed") state.live.review += 1;
-    if (event.type === "run_completed" || event.type === "run_failed") resetLive();
+    if (event.type === "run_completed" || event.type === "run_failed" || event.type === "run_cancelled") resetLive();
   }
 
   function paintClass(source, overview) {
@@ -193,7 +220,12 @@
 
   function sourceLink(row, text) {
     const label = text || sourceLabel(row);
-    const href = safeHttpUrl(row && row.url);
+    return externalLink(row && row.url, label);
+  }
+
+  function externalLink(url, text) {
+    const label = text || "";
+    const href = safeHttpUrl(url);
     if (!href) {
       const span = el("span");
       span.textContent = label;
@@ -209,7 +241,7 @@
 
   function currentView() {
     const hash = (location.hash || "#/control").replace("#/", "");
-    return ["control", "sources", "runs", "review"].includes(hash) ? hash : "control";
+    return ["control", "sources", "runs", "review", "hunting"].includes(hash) ? hash : "control";
   }
 
   function showView() {
@@ -230,7 +262,7 @@
     const running = isRunning(overview);
     const enabled = (overview.metrics || {}).enabled_sources || 0;
     const stateText = running
-      ? t("running") + " " + (job.completed || 0) + "/" + enabled
+      ? (jobState(overview) === "stopping" ? t("stopping") : t("running")) + " " + (job.completed || 0) + "/" + enabled
       : run.run_id
         ? t("complete")
         : t("idle");
@@ -500,9 +532,60 @@
 
   async function loadReview() {
     const payload = await getJSON("/api/review");
+    state.reviewItems = payload.items || [];
+    renderReview();
+  }
+
+  function reviewStatusLabel(value) {
+    if (value === "pending") return t("filterPending");
+    if (value === "accept") return t("filterAccepted");
+    if (value === "reject") return t("filterRejected");
+    return t("filterAll");
+  }
+
+  function renderReviewFilters() {
+    const wrap = $("#review-filters");
+    wrap.replaceChildren();
+    const statuses = ["pending", "accept", "reject", "all"];
+    statuses.forEach((value) => {
+      const button = el("button", state.reviewStatus === value ? "chip active" : "chip");
+      button.type = "button";
+      button.textContent = reviewStatusLabel(value);
+      button.addEventListener("click", () => {
+        state.reviewStatus = value;
+        renderReview();
+      });
+      wrap.append(button);
+    });
+    const types = [];
+    (state.reviewItems || []).forEach((item) => {
+      const kind = item.type || "";
+      if (kind && types.indexOf(kind) === -1) types.push(kind);
+    });
+    types.sort();
+    ["", ...types].forEach((value) => {
+      const button = el("button", state.reviewType === value ? "chip active" : "chip");
+      button.type = "button";
+      button.textContent = value || t("filterAll") + " / " + t("type");
+      button.addEventListener("click", () => {
+        state.reviewType = value;
+        renderReview();
+      });
+      wrap.append(button);
+    });
+  }
+
+  function renderReview() {
+    renderReviewFilters();
     const wrap = $("#review-list");
     wrap.replaceChildren();
-    const items = payload.items || [];
+    const items = (state.reviewItems || []).filter((item) => {
+      if (state.reviewStatus !== "all" && (item.decision || "pending") !== state.reviewStatus) {
+        return false;
+      }
+      if (state.reviewType && (item.type || "") !== state.reviewType) return false;
+      return true;
+    });
     if (!items.length) {
       const empty = el("p", "empty");
       empty.textContent = t("empty");
@@ -512,12 +595,21 @@
     items.forEach((item) => {
       const card = el("article", "review-card");
       const title = el("h3");
-      title.textContent = (item.content || "") + " · " + (item.type || "");
+      const kind = el("span", "review-type");
+      kind.textContent = item.type || t("type");
+      title.append(kind, document.createTextNode(item.content || ""));
       const meta = el("p", "muted");
       meta.textContent = (item.run_id || "") + " / " + (item.source_name || "") + " / " + (item.decision || t("pending"));
+      card.append(title, meta);
+      const originalHref = safeHttpUrl(item.report_url);
+      if (originalHref || item.report_title) {
+        const original = el("p", "review-original");
+        original.append(externalLink(item.report_url, item.report_title || t("openOriginal")));
+        card.append(original);
+      }
       const evidence = el("p");
       evidence.textContent = item.evidence || "";
-      card.append(title, meta, evidence);
+      card.append(evidence);
       if (item.decision === "pending") {
         const actions = el("div", "review-actions");
         const note = el("input");
@@ -574,20 +666,34 @@
     renderField(state.overview);
     renderEvents();
     const running = isRunning(state.overview);
+    const stopping = jobState(state.overview) === "stopping";
     $("#run-collection").disabled = Boolean(running);
-    $(".live-dot").classList.toggle("active", Boolean(running));
+    const stop = $("#stop-collection");
+    if (stop) {
+      stop.hidden = !running;
+      stop.disabled = stopping;
+      stop.textContent = stopping ? t("stopping") : t("stopCollection");
+    }
+    const validateBtn = $("#validate-sources");
+    if (validateBtn) {
+      validateBtn.classList.toggle("is-disabled", Boolean(running));
+      validateBtn.setAttribute("aria-disabled", running ? "true" : "false");
+    }
+    const liveDot = $("#live-dot") || document.querySelector(".live-dot");
+    if (liveDot) liveDot.classList.toggle("active", Boolean(running));
   }
 
   async function loadOverview() {
     try {
       state.overview = await getJSON("/api/overview");
       banner("", false);
-      render();
-      if (isRunning(state.overview)) startLivePoll();
-      if (state.view === "sources") loadSources();
     } catch (err) {
       banner(t("disconnected"), true);
+      return;
     }
+    render();
+    if (isRunning(state.overview)) startLivePoll();
+    if (state.view === "sources") loadSources();
   }
 
   function startLivePoll() {
@@ -623,16 +729,39 @@
   }
 
   async function validateSources() {
+    if (isBusy(state.overview)) {
+      showNotice(t("validateBlocked"));
+      return;
+    }
     const response = await fetch("/api/sources/validate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({})
     });
+    if (response.status === 409) {
+      showNotice(t("validateBlocked"));
+      return;
+    }
     if (!response.ok) {
       banner(t("failedRequest"), true);
       return;
     }
     loadSources();
+  }
+
+  async function stopRun() {
+    if (!isBusy(state.overview)) return;
+    const response = await fetch("/api/runs/current/stop", { method: "POST" });
+    if (response.status === 404) {
+      banner(t("noJob"), true);
+      return;
+    }
+    if (!response.ok) {
+      banner(t("failedRequest"), true);
+      return;
+    }
+    banner("", false);
+    loadOverview();
   }
 
   function connectEvents() {
@@ -644,13 +773,15 @@
         const event = JSON.parse(message.data);
         applyLiveEvent(event);
         state.events.push(event);
+        if (state.events.length > 80) state.events = state.events.slice(-40);
         renderEvents();
         if (
           event.type === "run_started" ||
           event.type === "source_started" ||
           event.type === "source_completed" ||
           event.type === "run_completed" ||
-          event.type === "run_failed"
+          event.type === "run_failed" ||
+          event.type === "run_cancelled"
         ) {
           loadOverview();
         }
@@ -681,6 +812,7 @@
       setLang(state.lang === "en" ? "zh-CN" : "en");
     });
     $("#run-collection").addEventListener("click", startRun);
+    $("#stop-collection").addEventListener("click", stopRun);
     $("#validate-sources").addEventListener("click", validateSources);
     window.addEventListener("hashchange", () => {
       showView();

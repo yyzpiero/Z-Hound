@@ -1,0 +1,23 @@
+name: Container smoke check
+on:
+  pull_request:
+  push:
+    branches: [main, master, 'codex/**']
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Validate Compose with example configuration
+        run: docker compose --env-file .env.example config --quiet
+      - name: Build image
+        run: docker build --tag z-hound:ci .
+      - name: Verify startup, seed qualification, restart and recreation
+        run: python3 tools/smoke_container.py --image z-hound:ci

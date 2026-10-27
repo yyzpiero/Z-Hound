@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Z/HOUND</title>
-    <link rel="stylesheet" href="/static/app.css?v=20260901b" />
+    <link rel="stylesheet" href="/static/app.css?v=20261027a" />
   </head>
   <body>
     <div class="shell">
@@ -15,12 +15,13 @@
         </div>
         <div class="ops-cluster">
           <p class="ops" data-i18n="operations">IOC COLLECTION OPERATIONS</p>
-          <p class="mode"><span class="live-dot" aria-hidden="true"></span><span data-i18n="localMode">LOCAL / AIR-GAPPED</span></p>
+          <p class="mode"><span id="live-dot" class="live-dot" aria-hidden="true"></span><span data-i18n="localMode">LOCAL WORKSPACE</span></p>
         </div>
         <div class="actions">
           <button type="button" id="theme-toggle" class="chip"></button>
           <button type="button" id="lang-toggle" class="chip"></button>
           <button type="button" id="run-collection" class="primary"></button>
+          <button type="button" id="stop-collection" class="danger" hidden></button>
         </div>
       </header>
       <div class="workspace">
@@ -29,9 +30,16 @@
           <a href="#/sources" data-nav="sources" data-i18n="navSources">02 SOURCES</a>
           <a href="#/runs" data-nav="runs" data-i18n="navRuns">03 RUNS</a>
           <a href="#/review" data-nav="review" data-i18n="navReview">04 REVIEW</a>
+          <a href="#/hunting" data-nav="hunting" data-i18n="navHunting">05 HUNTING</a>
         </nav>
         <main role="main">
           <p id="banner" class="banner" hidden></p>
+          <dialog id="notice-dialog" class="notice">
+            <p id="notice-text"></p>
+            <form method="dialog">
+              <button type="submit" id="notice-ok" class="primary" data-i18n="noticeOk">OK</button>
+            </form>
+          </dialog>
           <section data-view="control" class="view">
             <div class="hero">
               <div>
@@ -100,12 +108,90 @@
                 <h1 data-i18n="reviewTitle"></h1>
               </div>
             </div>
+            <div id="review-filters" class="review-filters"></div>
             <div id="review-list" class="review-list"></div>
+          </section>
+          <section data-view="hunting" class="view" hidden>
+            <div class="hero">
+              <div><p class="kicker" data-i18n="huntSector"></p><h1 data-i18n="huntTitle"></h1></div>
+              <div class="hunt-actions">
+                <button id="hunt-demo" class="chip" type="button" data-i18n="huntDemo"></button>
+                <label class="hunt-file"><span data-i18n="huntImport"></span><input id="hunt-import" type="file" accept="application/json,.json" /></label>
+              </div>
+            </div>
+            <p class="hunt-intro" data-i18n="huntIntro"></p>
+            <p id="hunt-config" class="hunt-intro muted"></p>
+            <p id="hunt-error" class="banner" role="alert" hidden></p>
+            <section id="seed-library" class="panel seed-library" aria-labelledby="seed-title">
+              <div class="panel-head"><h2 id="seed-title" data-i18n="seedTitle"></h2><button id="seed-refresh" class="chip" type="button" data-i18n="huntRefresh"></button></div>
+              <p class="muted" data-i18n="seedIntro"></p>
+              <p id="seed-error" class="banner" role="alert" hidden></p>
+              <p id="seed-message" role="status" hidden></p>
+              <div class="seed-layout">
+                <div>
+                  <form id="seed-import-form" class="seed-form">
+                    <label><span data-i18n="seedPaste"></span><textarea id="seed-text" rows="3" maxlength="2097152" required></textarea></label>
+                    <label><span data-i18n="seedSource"></span><input id="seed-source" maxlength="4000" /></label>
+                    <label><span data-i18n="seedEvidence"></span><textarea id="seed-evidence" rows="2" maxlength="16384"></textarea></label>
+                    <div class="hunt-actions"><button id="seed-add" class="primary" type="submit" data-i18n="seedAdd"></button><label class="hunt-file"><span data-i18n="seedUpload"></span><input id="seed-upload" type="file" accept=".txt,.csv,.json,text/plain,text/csv,application/json" /></label><a href="/static/seed-template.csv" download="seed-template.csv" data-i18n="seedTemplate"></a></div>
+                    <p class="muted" data-i18n="seedImportHint"></p>
+                  </form>
+                  <details id="seed-collector"><summary data-i18n="seedFromCollector"></summary><p class="muted" data-i18n="seedCollectorHint"></p><button id="seed-load-collector" class="chip" type="button" data-i18n="seedLoadCollector"></button><div id="seed-collector-list" class="seed-list"></div><button id="seed-transfer" class="chip" type="button" disabled data-i18n="seedTransfer"></button></details>
+                </div>
+                <div>
+                  <label class="seed-filter"><span data-i18n="seedFilter"></span><input id="seed-filter" type="search" /></label>
+                  <div id="seed-list" class="seed-list"></div>
+                </div>
+              </div>
+              <form id="seed-review-form" class="seed-form" hidden>
+                <h3 id="seed-review-title"></h3>
+                <p class="muted" data-i18n="seedReviewHint"></p>
+                <fieldset id="seed-review-fields">
+                  <div class="seed-layout">
+                    <label><span data-i18n="seedStatus"></span><select id="seed-status"><option value="pending" data-i18n="seed_pending"></option><option value="confirmed" data-i18n="seed_confirmed"></option><option value="rejected" data-i18n="seed_rejected"></option></select></label>
+                    <label><span data-i18n="seedValue"></span><select id="seed-value"><option value="unrated" data-i18n="seed_unrated"></option><option value="low" data-i18n="seed_low"></option><option value="medium" data-i18n="seed_medium"></option><option value="high" data-i18n="seed_high"></option></select></label>
+                    <label><span data-i18n="seedReviewer"></span><input id="seed-reviewer" required maxlength="200" /></label>
+                    <label><span data-i18n="seedRationale"></span><textarea id="seed-rationale" required rows="2" maxlength="4000"></textarea></label>
+                    <label><span data-i18n="seedSource"></span><textarea id="seed-review-source" rows="2" maxlength="4000"></textarea></label>
+                    <label><span data-i18n="seedEvidence"></span><textarea id="seed-review-evidence" rows="2" maxlength="16384"></textarea></label>
+                  </div>
+                  <div class="hunt-actions"><button id="seed-save" class="primary" type="submit" data-i18n="seedSave"></button><button id="seed-reload-review" class="chip" type="button" data-i18n="seedReload"></button><button id="seed-close-review" class="chip" type="button" data-i18n="seedClose"></button></div>
+                </fieldset>
+                <details id="seed-review-history"><summary data-i18n="seedHistory"></summary><div id="seed-history-list"></div></details>
+              </form>
+            </section>
+            <div class="hunt-layout">
+              <section class="panel hunt-builder" aria-labelledby="hunt-create-title">
+                <h2 id="hunt-create-title" data-i18n="huntCreate"></h2>
+                <form id="hunt-form">
+                  <label><span data-i18n="huntName"></span><input id="hunt-name" maxlength="120" required /></label>
+                  <label><span data-i18n="huntContext"></span><textarea id="hunt-context" maxlength="4000" rows="2"></textarea></label>
+                  <label><span data-i18n="huntFilter"></span><input id="hunt-filter" type="search" /></label>
+                  <div class="hunt-actions"><button id="hunt-select-visible" type="button" class="chip" data-i18n="huntSelectVisible"></button><button id="hunt-clear" type="button" class="chip" data-i18n="huntClear"></button><span id="hunt-selected" class="muted" aria-live="polite"></span></div>
+                  <div id="hunt-seeds" class="hunt-seeds"></div>
+                  <div class="hunt-options">
+                    <label><span data-i18n="huntBudget"></span><input id="hunt-budget" type="number" value="12" min="1" max="64" required /></label>
+                    <label><span data-i18n="huntMaxResults"></span><input id="hunt-max-results" type="number" value="100" min="1" max="1000" required /></label>
+                  </div>
+                  <label class="hunt-check"><input id="hunt-llm" type="checkbox" /><span data-i18n="huntLLM"></span></label>
+                  <p class="muted" data-i18n="huntLLMNotice"></p>
+                  <button id="hunt-start" class="primary" type="submit" disabled data-i18n="huntStart"></button>
+                </form>
+              </section>
+              <section class="panel" aria-labelledby="hunt-history-title">
+                <div class="panel-head"><h2 id="hunt-history-title" data-i18n="huntHistory"></h2><button id="hunt-refresh" class="chip" type="button" data-i18n="huntRefresh"></button></div>
+                <div id="hunt-history" class="hunt-history"></div>
+              </section>
+            </div>
+            <section id="hunt-detail" class="panel hunt-detail" aria-live="polite"></section>
           </section>
         </main>
       </div>
     </div>
-    <script src="/static/i18n.js?v=20260901b"></script>
-    <script src="/static/app.js?v=20260901b"></script>
+    <script src="/static/i18n.js?v=20261027c"></script>
+    <script src="/static/app.js?v=20261026a"></script>
+    <script src="/static/seeds.js?v=20261027a"></script>
+    <script src="/static/assessment.js?v=20261027a"></script>
+    <script src="/static/hunting.js?v=20261027b"></script>
   </body>
 </html>

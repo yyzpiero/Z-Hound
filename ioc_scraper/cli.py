@@ -7,7 +7,8 @@ import logging
 from pathlib import Path
 import sys
 
-from .application import build_services, load_catalog
+from .application import build_services, load_catalog, resolve_data_dir
+from .menu import prompt_menu
 from .persistence.migration import migrate_legacy
 from .pipeline import CollectOptions
 from .registry import ALLOWED_STRATEGIES
@@ -53,7 +54,7 @@ def format_source_line(index: int, total: int, source) -> str:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = CollectorArgumentParser(prog="ioc-scraper")
-    commands = parser.add_subparsers(dest="command", required=True)
+    commands = parser.add_subparsers(dest="command", required=False)
     collect = commands.add_parser("collect", help="discover reports and extract IoCs")
     cutoff = collect.add_mutually_exclusive_group()
     cutoff.add_argument("--lookback", metavar="MONTHS")
@@ -114,7 +115,11 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def _project_data_dir() -> Path:
-    return Path(__file__).resolve().parents[1] / "data"
+    return resolve_data_dir()
+
+
+def _stdin_is_interactive() -> bool:
+    return sys.stdin.isatty()
 
 
 def _selected_ids(args) -> set[int] | None:
@@ -147,8 +152,19 @@ def _serve_dashboard(host: str, port: int) -> int:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    requested = list(argv) if argv is not None else sys.argv[1:]
+    if not requested:
+        if not _stdin_is_interactive():
+            build_parser().print_help(sys.stderr)
+            return 2
+        requested = prompt_menu()
+        if requested is None:
+            return 0
     parser = build_parser()
-    args = parser.parse_args(argv)
+    args = parser.parse_args(requested)
+    if args.command is None:
+        parser.print_help(sys.stderr)
+        return 2
     logging.basicConfig(
         level=getattr(logging, args.log_level),
         format="%(levelname)s %(message)s",
