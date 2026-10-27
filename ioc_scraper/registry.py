@@ -57,7 +57,13 @@ def load_sources(
     selected_ids: set[int] | None = None,
     selected_strategies: set[str] | None = None,
 ) -> list[SourceRecord]:
-    with Path(path).open(newline="", encoding="utf-8-sig") as handle:
+    path = Path(path)
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"source catalog not found: {path}. "
+            "Copy data/source.example.csv to data/source.csv"
+        )
+    with path.open(newline="", encoding="utf-8-sig") as handle:
         rows = list(csv.DictReader(handle))
     sources: list[SourceRecord] = []
     seen: set[int] = set()

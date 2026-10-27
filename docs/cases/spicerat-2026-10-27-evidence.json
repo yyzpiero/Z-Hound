@@ -1,0 +1,215 @@
+{
+  "kind": "selected evidence excerpt, not a full replay snapshot",
+  "captured_at": "2026-10-27T06:23:46.257140+00:00",
+  "code_commit": "1000d00",
+  "task_id": "d8b872c142924a4b80f4a1bcfe143ebb",
+  "engine_version": "2",
+  "seed": {
+    "ip": "188.190.29.126",
+    "port": "80"
+  },
+  "source_report": "https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure",
+  "queries": [
+    {
+      "query": "ip=\"188.190.29.126\" && port=\"80\"",
+      "total": 1,
+      "returned": 1,
+      "retrieved_at": "2026-10-27T06:23:46.257140+00:00"
+    },
+    {
+      "query": "title=\"Home | RTX\"",
+      "total": 31,
+      "returned": 10,
+      "retrieved_at": "2026-10-27T06:23:49.644643+00:00"
+    },
+    {
+      "query": "title=\"Home | RTX\" && header=\"Server: nginx\"",
+      "total": 23,
+      "returned": 10,
+      "retrieved_at": "2026-10-27T06:23:53.821918+00:00"
+    },
+    {
+      "query": "title=\"Home | RTX\" && header=\"X-Powered-By: PHP/5.5.38\"",
+      "total": 20,
+      "returned": 10,
+      "retrieved_at": "2026-10-27T06:23:58.457285+00:00"
+    }
+  ],
+  "verification": {
+    "task_id": "d8b872c142924a4b80f4a1bcfe143ebb",
+    "engine_version": "2",
+    "queries": 4,
+    "returned_rows": 31,
+    "candidate_services": 16,
+    "candidate_ips": 13,
+    "new_distinct_candidate_ips": 12,
+    "publicly_corroborated_new_ips": [
+      "194.68.44.133",
+      "31.58.209.28",
+      "31.59.185.224",
+      "45.153.125.20",
+      "45.153.125.200",
+      "46.30.188.54"
+    ],
+    "decisions": {
+      "related": 9,
+      "unrelated": 3,
+      "uncertain": 4
+    },
+    "certificate_rendered_text_sha256": "9ae1fe1a91627d93c15aadfd33a08a79d31597f6a1db63abd03ca11c8e79e85e",
+    "offline_replay_equal": true,
+    "offline_replay_api_calls": 0,
+    "source_unchanged_by_replay": true,
+    "snapshot_sha256": "a353b8dacbe7bc8ba3be865749fa2be347f2f4c3df874386a9e11a9aa0fd4153"
+  },
+  "selected_corroborated_services": [
+    {
+      "id": "f61c7a0fc4d8b841ba673a12",
+      "ip": "31.58.209.28",
+      "port": "443",
+      "host": "https://31.58.209.28",
+      "title": "Home | RTX",
+      "server": "nginx",
+      "certs_subject_cn": "CloudFlare Origin Certificate",
+      "stable_headers": [
+        "Server: nginx",
+        "X-Powered-By: PHP/5.5.38"
+      ],
+      "discovered_by": [
+        "title=\"Home | RTX\"",
+        "title=\"Home | RTX\" && header=\"Server: nginx\"",
+        "title=\"Home | RTX\" && header=\"X-Powered-By: PHP/5.5.38\""
+      ]
+    },
+    {
+      "id": "58bfff0def4758f267f69f82",
+      "ip": "31.59.185.224",
+      "port": "443",
+      "host": "https://31.59.185.224",
+      "title": "Home | RTX",
+      "server": "nginx/1.29.3",
+      "certs_subject_cn": "",
+      "stable_headers": [
+        "Server: nginx/1.29.3",
+        "X-Powered-By: PHP/5.5.38"
+      ],
+      "discovered_by": [
+        "title=\"Home | RTX\"",
+        "title=\"Home | RTX\" && header=\"Server: nginx\"",
+        "title=\"Home | RTX\" && header=\"X-Powered-By: PHP/5.5.38\""
+      ]
+    },
+    {
+      "id": "b6e4e1e1e285fe36f3d957cd",
+      "ip": "46.30.188.54",
+      "port": "443",
+      "host": "https://46.30.188.54",
+      "title": "Home | RTX",
+      "server": "nginx/1.31.3",
+      "certs_subject_cn": "tojiktelecomtj.com",
+      "stable_headers": [
+        "Server: nginx/1.31.3",
+        "X-Powered-By: PHP/5.5.38"
+      ],
+      "discovered_by": [
+        "title=\"Home | RTX\"",
+        "title=\"Home | RTX\" && header=\"Server: nginx\"",
+        "title=\"Home | RTX\" && header=\"X-Powered-By: PHP/5.5.38\""
+      ]
+    },
+    {
+      "id": "b2d74295d4c79808adbc88bf",
+      "ip": "46.30.188.54",
+      "port": "443",
+      "host": "https://www.tojiktelecomtj.com",
+      "title": "Home | RTX",
+      "server": "nginx/1.31.3",
+      "certs_subject_cn": "tojiktelecomtj.com",
+      "stable_headers": [
+        "Server: nginx/1.31.3",
+        "X-Powered-By: PHP/5.5.38"
+      ],
+      "discovered_by": [
+        "title=\"Home | RTX\"",
+        "title=\"Home | RTX\" && header=\"Server: nginx\"",
+        "title=\"Home | RTX\" && header=\"X-Powered-By: PHP/5.5.38\""
+      ]
+    },
+    {
+      "id": "7e990f8710f957ae99dbd147",
+      "ip": "45.153.125.20",
+      "port": "443",
+      "host": "https://45.153.125.20",
+      "title": "Home | RTX",
+      "server": "nginx/1.31.3",
+      "certs_subject_cn": "azure.uzrailwaystax.com",
+      "stable_headers": [
+        "Server: nginx/1.31.3",
+        "X-Powered-By: PHP/5.5.38"
+      ],
+      "discovered_by": [
+        "title=\"Home | RTX\" && header=\"Server: nginx\"",
+        "title=\"Home | RTX\" && header=\"X-Powered-By: PHP/5.5.38\""
+      ]
+    },
+    {
+      "id": "ddf2c9da54d3b525eb4fd0c7",
+      "ip": "45.153.125.200",
+      "port": "80",
+      "host": "45.153.125.200",
+      "title": "Home | RTX",
+      "server": "nginx",
+      "certs_subject_cn": "",
+      "stable_headers": [
+        "Server: nginx",
+        "X-Powered-By: PHP/5.5.38"
+      ],
+      "discovered_by": [
+        "title=\"Home | RTX\" && header=\"Server: nginx\"",
+        "title=\"Home | RTX\" && header=\"X-Powered-By: PHP/5.5.38\""
+      ]
+    },
+    {
+      "id": "66238cb28232473c2fa988dc",
+      "ip": "194.68.44.133",
+      "port": "443",
+      "host": "https://194.68.44.133",
+      "title": "Home | RTX",
+      "server": "nginx/1.29.3",
+      "certs_subject_cn": "infrastructure.minings.blog",
+      "stable_headers": [
+        "Server: nginx/1.29.3",
+        "X-Powered-By: PHP/5.5.38"
+      ],
+      "discovered_by": [
+        "title=\"Home | RTX\" && header=\"Server: nginx\"",
+        "title=\"Home | RTX\" && header=\"X-Powered-By: PHP/5.5.38\""
+      ]
+    },
+    {
+      "id": "d62aae98fc66460c8d26d90a",
+      "ip": "194.68.44.133",
+      "port": "443",
+      "host": "https://infrastructure.minings.blog",
+      "title": "Home | RTX",
+      "server": "nginx/1.29.3",
+      "certs_subject_cn": "infrastructure.minings.blog",
+      "stable_headers": [
+        "Server: nginx/1.29.3",
+        "X-Powered-By: PHP/5.5.38"
+      ],
+      "discovered_by": [
+        "title=\"Home | RTX\" && header=\"Server: nginx\"",
+        "title=\"Home | RTX\" && header=\"X-Powered-By: PHP/5.5.38\""
+      ]
+    }
+  ],
+  "costs": {
+    "successful_task_fofa": 4,
+    "successful_task_deepseek": 0,
+    "all_attempts_fofa": 12,
+    "all_attempts_deepseek": 2,
+    "all_returned_rows": 82,
+    "deepseek_tokens": 6768
+  }
+}

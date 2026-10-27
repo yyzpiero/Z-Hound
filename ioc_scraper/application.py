@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime
 import os
@@ -24,6 +24,31 @@ from .registry import load_sources
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 DEFAULT_ALIAS_PATH = PACKAGE_DIR / "data" / "actor_aliases.csv"
+DATA_DIR_ENV = "IOC_SCRAPER_DATA_DIR"
+
+
+def resolve_data_dir(
+    *,
+    environ: Mapping[str, str] | None = None,
+    package_dir: Path | None = None,
+    cwd: Path | None = None,
+) -> Path:
+    """Return the operator data directory.
+
+    Editable checkouts keep ``<repo>/data``. A non-editable install (Docker
+    ``pip install .``) has no pyproject next to the package, so use
+    ``$IOC_SCRAPER_DATA_DIR`` or ``<cwd>/data`` (Compose mounts ``./data:/app/data``).
+    """
+    source = os.environ if environ is None else environ
+    explicit = str(source.get(DATA_DIR_ENV, "")).strip()
+    if explicit:
+        return Path(explicit).expanduser().resolve()
+    package = Path(package_dir) if package_dir is not None else PACKAGE_DIR
+    repo = package.parent
+    if (repo / "pyproject.toml").is_file() and (repo / "ioc_scraper").is_dir():
+        return (repo / "data").resolve()
+    workdir = Path(cwd) if cwd is not None else Path.cwd()
+    return (workdir / "data").resolve()
 
 
 @dataclass(frozen=True)

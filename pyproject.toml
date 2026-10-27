@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ioc-scraper"
-version = "0.2.0"
-description = "CSV-first multi-source indicator-of-compromise collector"
+version = "0.3.0"
+description = "High-value IoC infrastructure discovery, evidence assessment and report collection"
 requires-python = ">=3.11"
 dependencies = [
   "beautifulsoup4>=4.12,<5",

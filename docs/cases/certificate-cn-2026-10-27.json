@@ -1,0 +1,1261 @@
+{
+  "version": 1,
+  "id": "3d2a6f2f074a460597088da44c571185",
+  "name": "真实CN拓线｜SpiceRAT｜4次请求上限",
+  "state": "completed",
+  "mode": "fofa",
+  "created_at": "2026-10-27T07:51:42.713840+00:00",
+  "engine_version": "3",
+  "synthetic": false,
+  "seeds": [
+    {
+      "report_url": "https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure",
+      "threat_actor": "",
+      "evidence": "公开报告列出的历史基础设施 IP；2026-10-27 已记录的 FOFA 快照还返回该 IP 的443服务与 CN=azure.uzrailwaystax.com。本轮仅以该服务为输入，研究证书线索，不假定当前恶意。",
+      "type": "ipv4",
+      "published_at": "",
+      "report_title": "SilkParasite / SpiceRAT infrastructure",
+      "indicator_role": "",
+      "source": "https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure",
+      "content": "188.190.29.126",
+      "port": "443",
+      "id": "seed-30e3f021f6c5d6cf9f135df1",
+      "qualification": {
+        "status": "confirmed",
+        "value": "high",
+        "reviewer": "Codex／来源及历史快照核对（代理操作）",
+        "rationale": "根据用户授权选择真实案例验证种子；确认来源与研究价值，不代表用户本人已完成归因判断。",
+        "revision": 1,
+        "reviewed_at": "2026-10-27T07:51:42.710826+00:00"
+      }
+    }
+  ],
+  "context": "仅一个已公开历史基础设施443服务。验证证书CN拓线及原始证书、服务信息的交叉证据；不主动探测目标，不推定当前恶意或组织归属。",
+  "features": [
+    {
+      "id": "f-147bf20f2888cc23e26e0f3d",
+      "field": "cert.subject.cn",
+      "value": "azure.uzrailwaystax.com",
+      "evidence": [
+        "e02a54a650673b374ac02079"
+      ],
+      "generic": false,
+      "filter_reasons": []
+    },
+    {
+      "id": "f-17a22d40ab8e9ea17d5d4e67",
+      "field": "jarm",
+      "value": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+      "evidence": [
+        "e02a54a650673b374ac02079"
+      ],
+      "generic": false,
+      "filter_reasons": []
+    },
+    {
+      "id": "f-a7bc1842ff6bc6cce17152f5",
+      "field": "title",
+      "value": "Home | RTX",
+      "evidence": [
+        "e02a54a650673b374ac02079"
+      ],
+      "generic": false,
+      "filter_reasons": []
+    },
+    {
+      "id": "f-095b3a23efc4d7d9ad663c46",
+      "field": "header",
+      "value": "Server: nginx/1.31.3",
+      "evidence": [
+        "e02a54a650673b374ac02079"
+      ],
+      "generic": true,
+      "filter_reasons": [
+        "common_hosting_server"
+      ]
+    },
+    {
+      "id": "f-4e40e4fee3b415c06a96dfa7",
+      "field": "header",
+      "value": "X-Powered-By: PHP/5.5.38",
+      "evidence": [
+        "e02a54a650673b374ac02079"
+      ],
+      "generic": true,
+      "filter_reasons": [
+        "common_framework"
+      ]
+    },
+    {
+      "id": "f-aad495e006fdd37d0e7b27c9",
+      "field": "port",
+      "value": "443",
+      "evidence": [
+        "e02a54a650673b374ac02079"
+      ],
+      "generic": true,
+      "filter_reasons": [
+        "generic_service"
+      ]
+    },
+    {
+      "id": "f-f499f2f452b9dfd2a9ada2f5",
+      "field": "protocol",
+      "value": "https",
+      "evidence": [
+        "e02a54a650673b374ac02079"
+      ],
+      "generic": true,
+      "filter_reasons": [
+        "generic_service"
+      ]
+    },
+    {
+      "id": "f-a3560066e979b17ae015e76e",
+      "field": "server",
+      "value": "nginx/1.31.3",
+      "evidence": [
+        "e02a54a650673b374ac02079"
+      ],
+      "generic": true,
+      "filter_reasons": [
+        "common_hosting_server"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "query": "cert.subject.cn=\"azure.uzrailwaystax.com\"",
+      "feature_ids": [
+        "f-147bf20f2888cc23e26e0f3d"
+      ],
+      "generic_penalty": 0,
+      "coverage": 1.0,
+      "new_count": 9,
+      "total": 10,
+      "returned": 10,
+      "partial": false,
+      "coverage_unverified": false,
+      "score": 20.75
+    },
+    {
+      "query": "cert.subject.cn=\"azure.uzrailwaystax.com\" && jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+      "feature_ids": [
+        "f-147bf20f2888cc23e26e0f3d",
+        "f-17a22d40ab8e9ea17d5d4e67"
+      ],
+      "generic_penalty": 0,
+      "coverage": 1.0,
+      "new_count": 7,
+      "total": 8,
+      "returned": 8,
+      "partial": false,
+      "coverage_unverified": false,
+      "score": 19.875
+    },
+    {
+      "query": "jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+      "feature_ids": [
+        "f-17a22d40ab8e9ea17d5d4e67"
+      ],
+      "generic_penalty": 0,
+      "coverage": 0.0,
+      "new_count": 10,
+      "total": 2861744,
+      "returned": 10,
+      "partial": true,
+      "coverage_unverified": true,
+      "score": 0.75
+    }
+  ],
+  "candidates": [
+    {
+      "id": "0e131a3d4b29f0bb0362fc06",
+      "asset": {
+        "ip": "193.29.56.119",
+        "port": "443",
+        "protocol": "https",
+        "host": "https://193.29.56.119",
+        "domain": "",
+        "title": "502 Bad Gateway",
+        "server": "nginx/1.31.3",
+        "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+        "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+        "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Fri, 23 Oct 2026 08:46:13 GMT\r\nServer: nginx/1.31.3\r\n",
+        "banner": "",
+        "certs_subject_org": "",
+        "certs_subject_cn": "azure.uzrailwaystax.com"
+      },
+      "reasons": [
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d"
+          ],
+          "score": 20.75
+        },
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\" && jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d",
+            "f-17a22d40ab8e9ea17d5d4e67"
+          ],
+          "score": 19.875
+        }
+      ],
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。"
+    },
+    {
+      "id": "6b733e168d1583f6cf080cf5",
+      "asset": {
+        "ip": "92.243.66.71",
+        "port": "443",
+        "protocol": "https",
+        "host": "https://92.243.66.71",
+        "domain": "",
+        "title": "502 Bad Gateway",
+        "server": "nginx/1.31.3",
+        "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+        "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+        "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Mon, 19 Oct 2026 00:54:01 GMT\r\nServer: nginx/1.31.3\r\n",
+        "banner": "",
+        "certs_subject_org": "",
+        "certs_subject_cn": "azure.uzrailwaystax.com"
+      },
+      "reasons": [
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d"
+          ],
+          "score": 20.75
+        },
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\" && jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d",
+            "f-17a22d40ab8e9ea17d5d4e67"
+          ],
+          "score": 19.875
+        }
+      ],
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。"
+    },
+    {
+      "id": "395c426ddb4e15f7e21fd15f",
+      "asset": {
+        "ip": "92.243.66.71",
+        "port": "443",
+        "protocol": "https",
+        "host": "https://d6pth.dvrdydns.com",
+        "domain": "dvrdydns.com",
+        "title": "502 Bad Gateway",
+        "server": "nginx/1.31.3",
+        "jarm": "",
+        "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+        "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Fri, 09 Oct 2026 08:46:52 GMT\r\nServer: nginx/1.31.3\r\n",
+        "banner": "",
+        "certs_subject_org": "",
+        "certs_subject_cn": "azure.uzrailwaystax.com"
+      },
+      "reasons": [
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d"
+          ],
+          "score": 20.75
+        }
+      ],
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。"
+    },
+    {
+      "id": "1643289972fdd3a64a729244",
+      "asset": {
+        "ip": "92.243.66.71",
+        "port": "443",
+        "protocol": "https",
+        "host": "https://9749m.vitekivpddns.com",
+        "domain": "vitekivpddns.com",
+        "title": "502 Bad Gateway",
+        "server": "nginx/1.31.3",
+        "jarm": "",
+        "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+        "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Fri, 09 Oct 2026 02:57:20 GMT\r\nServer: nginx/1.31.3\r\n",
+        "banner": "",
+        "certs_subject_org": "",
+        "certs_subject_cn": "azure.uzrailwaystax.com"
+      },
+      "reasons": [
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d"
+          ],
+          "score": 20.75
+        }
+      ],
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。"
+    },
+    {
+      "id": "7e990f8710f957ae99dbd147",
+      "asset": {
+        "ip": "45.153.125.20",
+        "port": "443",
+        "protocol": "https",
+        "host": "https://45.153.125.20",
+        "domain": "",
+        "title": "Home | RTX",
+        "server": "nginx/1.31.3",
+        "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+        "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+        "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 55559\r\nContent-Type: text/html; charset=utf-8\r\nDate: Thu, 20 Aug 2026 08:05:01 GMT\r\nServer: nginx/1.31.3\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Nginx-Upstream-Cache-Status: EXPIRED\r\nX-Powered-By: PHP/5.5.38\r\nX-Server-Powered-By: AHOST SERVER3\r\nX-Xss-Protection: 1; mode=block\r\n",
+        "banner": "",
+        "certs_subject_org": "",
+        "certs_subject_cn": "azure.uzrailwaystax.com"
+      },
+      "reasons": [
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d"
+          ],
+          "score": 20.75
+        },
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\" && jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d",
+            "f-17a22d40ab8e9ea17d5d4e67"
+          ],
+          "score": 19.875
+        }
+      ],
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。"
+    },
+    {
+      "id": "b0940b29cc56b710736f8bd2",
+      "asset": {
+        "ip": "193.29.58.192",
+        "port": "443",
+        "protocol": "https",
+        "host": "https://193.29.58.192",
+        "domain": "",
+        "title": "502 Bad Gateway",
+        "server": "nginx/1.31.2",
+        "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+        "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+        "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Sat, 18 Jul 2026 06:07:26 GMT\r\nServer: nginx/1.31.2\r\n",
+        "banner": "",
+        "certs_subject_org": "",
+        "certs_subject_cn": "azure.uzrailwaystax.com"
+      },
+      "reasons": [
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d"
+          ],
+          "score": 20.75
+        },
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\" && jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d",
+            "f-17a22d40ab8e9ea17d5d4e67"
+          ],
+          "score": 19.875
+        }
+      ],
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。"
+    },
+    {
+      "id": "700b49fd6b2649c0ddafba87",
+      "asset": {
+        "ip": "2.58.14.95",
+        "port": "443",
+        "protocol": "https",
+        "host": "https://2.58.14.95",
+        "domain": "",
+        "title": "Home | RTX",
+        "server": "nginx/1.29.3",
+        "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+        "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+        "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 55559\r\nContent-Type: text/html; charset=utf-8\r\nDate: Wed, 17 Jun 2026 08:35:27 GMT\r\nServer: nginx/1.29.3\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Nginx-Upstream-Cache-Status: EXPIRED\r\nX-Powered-By: PHP/5.5.38\r\nX-Server-Powered-By: AHOST SERVER3\r\nX-Xss-Protection: 1; mode=block\r\n",
+        "banner": "",
+        "certs_subject_org": "",
+        "certs_subject_cn": "azure.uzrailwaystax.com"
+      },
+      "reasons": [
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d"
+          ],
+          "score": 20.75
+        },
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\" && jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d",
+            "f-17a22d40ab8e9ea17d5d4e67"
+          ],
+          "score": 19.875
+        }
+      ],
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。"
+    },
+    {
+      "id": "fec996bcd490fc1bb90e2ff0",
+      "asset": {
+        "ip": "193.29.59.159",
+        "port": "443",
+        "protocol": "https",
+        "host": "https://193.29.59.159",
+        "domain": "",
+        "title": "502 Bad Gateway",
+        "server": "nginx/1.29.3",
+        "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+        "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+        "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Thu, 14 May 2026 08:32:49 GMT\r\nServer: nginx/1.29.3\r\n",
+        "banner": "",
+        "certs_subject_org": "",
+        "certs_subject_cn": "azure.uzrailwaystax.com"
+      },
+      "reasons": [
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d"
+          ],
+          "score": 20.75
+        },
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\" && jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d",
+            "f-17a22d40ab8e9ea17d5d4e67"
+          ],
+          "score": 19.875
+        }
+      ],
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。"
+    },
+    {
+      "id": "f7de26c0ec219054217cbc3a",
+      "asset": {
+        "ip": "104.238.57.65",
+        "port": "443",
+        "protocol": "https",
+        "host": "https://104.238.57.65",
+        "domain": "",
+        "title": "502 Bad Gateway",
+        "server": "nginx/1.29.3",
+        "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+        "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+        "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Mon, 30 Mar 2026 08:28:33 GMT\r\nServer: nginx/1.29.3\r\n",
+        "banner": "",
+        "certs_subject_org": "",
+        "certs_subject_cn": "azure.uzrailwaystax.com"
+      },
+      "reasons": [
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d"
+          ],
+          "score": 20.75
+        },
+        {
+          "query": "cert.subject.cn=\"azure.uzrailwaystax.com\" && jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+          "feature_ids": [
+            "f-147bf20f2888cc23e26e0f3d",
+            "f-17a22d40ab8e9ea17d5d4e67"
+          ],
+          "score": 19.875
+        }
+      ],
+      "decision": "uncertain",
+      "attribution": "",
+      "note": "待定：本轮响应与种子完整证书文本一致，但原始研究未检索到该IP；可能是共享或迁移的基础设施，当前恶意性及归属未确认。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。"
+    }
+  ],
+  "queries": [
+    {
+      "query": "ip=\"188.190.29.126\" && port=\"443\"",
+      "purpose": "seed",
+      "error": null,
+      "result": {
+        "total": 1,
+        "assets": [
+          {
+            "ip": "188.190.29.126",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://188.190.29.126",
+            "domain": "",
+            "title": "Home | RTX",
+            "server": "nginx/1.31.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 55559\r\nContent-Type: text/html; charset=utf-8\r\nDate: Fri, 07 Aug 2026 21:38:13 GMT\r\nServer: nginx/1.31.3\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Nginx-Upstream-Cache-Status: EXPIRED\r\nX-Powered-By: PHP/5.5.38\r\nX-Server-Powered-By: AHOST SERVER3\r\nX-Xss-Protection: 1; mode=block\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          }
+        ],
+        "returned": 1,
+        "partial": false
+      },
+      "cost": 1,
+      "total": 1,
+      "returned": 1,
+      "partial": false,
+      "retrieved_at": "2026-10-27T07:51:46.722300+00:00"
+    },
+    {
+      "query": "cert.subject.cn=\"azure.uzrailwaystax.com\"",
+      "purpose": "expansion",
+      "error": null,
+      "result": {
+        "total": 10,
+        "assets": [
+          {
+            "ip": "193.29.56.119",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://193.29.56.119",
+            "domain": "",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.31.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Fri, 23 Oct 2026 08:46:13 GMT\r\nServer: nginx/1.31.3\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "92.243.66.71",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://92.243.66.71",
+            "domain": "",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.31.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Mon, 19 Oct 2026 00:54:01 GMT\r\nServer: nginx/1.31.3\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "92.243.66.71",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://d6pth.dvrdydns.com",
+            "domain": "dvrdydns.com",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.31.3",
+            "jarm": "",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Fri, 09 Oct 2026 08:46:52 GMT\r\nServer: nginx/1.31.3\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "92.243.66.71",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://9749m.vitekivpddns.com",
+            "domain": "vitekivpddns.com",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.31.3",
+            "jarm": "",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Fri, 09 Oct 2026 02:57:20 GMT\r\nServer: nginx/1.31.3\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "45.153.125.20",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://45.153.125.20",
+            "domain": "",
+            "title": "Home | RTX",
+            "server": "nginx/1.31.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 55559\r\nContent-Type: text/html; charset=utf-8\r\nDate: Thu, 20 Aug 2026 08:05:01 GMT\r\nServer: nginx/1.31.3\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Nginx-Upstream-Cache-Status: EXPIRED\r\nX-Powered-By: PHP/5.5.38\r\nX-Server-Powered-By: AHOST SERVER3\r\nX-Xss-Protection: 1; mode=block\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "188.190.29.126",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://188.190.29.126",
+            "domain": "",
+            "title": "Home | RTX",
+            "server": "nginx/1.31.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 55559\r\nContent-Type: text/html; charset=utf-8\r\nDate: Fri, 07 Aug 2026 21:38:13 GMT\r\nServer: nginx/1.31.3\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Nginx-Upstream-Cache-Status: EXPIRED\r\nX-Powered-By: PHP/5.5.38\r\nX-Server-Powered-By: AHOST SERVER3\r\nX-Xss-Protection: 1; mode=block\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "193.29.58.192",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://193.29.58.192",
+            "domain": "",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.31.2",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Sat, 18 Jul 2026 06:07:26 GMT\r\nServer: nginx/1.31.2\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "2.58.14.95",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://2.58.14.95",
+            "domain": "",
+            "title": "Home | RTX",
+            "server": "nginx/1.29.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 55559\r\nContent-Type: text/html; charset=utf-8\r\nDate: Wed, 17 Jun 2026 08:35:27 GMT\r\nServer: nginx/1.29.3\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Nginx-Upstream-Cache-Status: EXPIRED\r\nX-Powered-By: PHP/5.5.38\r\nX-Server-Powered-By: AHOST SERVER3\r\nX-Xss-Protection: 1; mode=block\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "193.29.59.159",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://193.29.59.159",
+            "domain": "",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.29.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Thu, 14 May 2026 08:32:49 GMT\r\nServer: nginx/1.29.3\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "104.238.57.65",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://104.238.57.65",
+            "domain": "",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.29.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Mon, 30 Mar 2026 08:28:33 GMT\r\nServer: nginx/1.29.3\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          }
+        ],
+        "returned": 10,
+        "partial": false
+      },
+      "cost": 1,
+      "total": 10,
+      "returned": 10,
+      "partial": false,
+      "retrieved_at": "2026-10-27T07:51:50.994684+00:00"
+    },
+    {
+      "query": "cert.subject.cn=\"azure.uzrailwaystax.com\" && jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+      "purpose": "expansion",
+      "error": null,
+      "result": {
+        "total": 8,
+        "assets": [
+          {
+            "ip": "193.29.56.119",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://193.29.56.119",
+            "domain": "",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.31.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Fri, 23 Oct 2026 08:46:13 GMT\r\nServer: nginx/1.31.3\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "92.243.66.71",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://92.243.66.71",
+            "domain": "",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.31.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Mon, 19 Oct 2026 00:54:01 GMT\r\nServer: nginx/1.31.3\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "45.153.125.20",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://45.153.125.20",
+            "domain": "",
+            "title": "Home | RTX",
+            "server": "nginx/1.31.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 55559\r\nContent-Type: text/html; charset=utf-8\r\nDate: Thu, 20 Aug 2026 08:05:01 GMT\r\nServer: nginx/1.31.3\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Nginx-Upstream-Cache-Status: EXPIRED\r\nX-Powered-By: PHP/5.5.38\r\nX-Server-Powered-By: AHOST SERVER3\r\nX-Xss-Protection: 1; mode=block\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "188.190.29.126",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://188.190.29.126",
+            "domain": "",
+            "title": "Home | RTX",
+            "server": "nginx/1.31.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 55559\r\nContent-Type: text/html; charset=utf-8\r\nDate: Fri, 07 Aug 2026 21:38:13 GMT\r\nServer: nginx/1.31.3\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Nginx-Upstream-Cache-Status: EXPIRED\r\nX-Powered-By: PHP/5.5.38\r\nX-Server-Powered-By: AHOST SERVER3\r\nX-Xss-Protection: 1; mode=block\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "193.29.58.192",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://193.29.58.192",
+            "domain": "",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.31.2",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Sat, 18 Jul 2026 06:07:26 GMT\r\nServer: nginx/1.31.2\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "2.58.14.95",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://2.58.14.95",
+            "domain": "",
+            "title": "Home | RTX",
+            "server": "nginx/1.29.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 55559\r\nContent-Type: text/html; charset=utf-8\r\nDate: Wed, 17 Jun 2026 08:35:27 GMT\r\nServer: nginx/1.29.3\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Nginx-Upstream-Cache-Status: EXPIRED\r\nX-Powered-By: PHP/5.5.38\r\nX-Server-Powered-By: AHOST SERVER3\r\nX-Xss-Protection: 1; mode=block\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "193.29.59.159",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://193.29.59.159",
+            "domain": "",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.29.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Thu, 14 May 2026 08:32:49 GMT\r\nServer: nginx/1.29.3\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          },
+          {
+            "ip": "104.238.57.65",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://104.238.57.65",
+            "domain": "",
+            "title": "502 Bad Gateway",
+            "server": "nginx/1.29.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+            "header": "HTTP/1.1 502 Bad Gateway\r\nConnection: close\r\nContent-Length: 559\r\nContent-Type: text/html\r\nDate: Mon, 30 Mar 2026 08:28:33 GMT\r\nServer: nginx/1.29.3\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "azure.uzrailwaystax.com"
+          }
+        ],
+        "returned": 8,
+        "partial": false
+      },
+      "cost": 1,
+      "total": 8,
+      "returned": 8,
+      "partial": false,
+      "retrieved_at": "2026-10-27T07:51:54.796243+00:00"
+    },
+    {
+      "query": "jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+      "purpose": "expansion",
+      "error": null,
+      "result": {
+        "total": 2861744,
+        "assets": [
+          {
+            "ip": "3.148.138.94",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://3.148.138.94",
+            "domain": "",
+            "title": "XIX3D - License Registration",
+            "server": "nginx/1.27.4",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 477271820515835660718196948997281456085890047969\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: US\n  Organization: CloudFlare, Inc.\n  Organizational Unit: CloudFlare Origin SSL Certificate Authority\n  Locality: San Francisco\n  Province: California\n\nValidity:\n  Not Before: 2025-03-17 19:14 UTC\n  Not After : 2040-03-13 19:14 UTC\n\nSubject:\n  Organization: CloudFlare, Inc.\n  Organizational Unit: CloudFlare Origin CA\n  CommonName: CloudFlare Origin Certificate\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      A6:99:2B:5F:AC:1F:0A:26:29:81:5A:60:42:44:F9:23:\n      11:A2:09:4D:57:2D:1B:71:4E:6C:06:02:2D:38:0E:B3:\n      80:23:B9:48:40:8E:4D:A9:E7:70:3A:56:78:DC:05:7A:\n      63:F8:44:73:EC:B3:D0:85:18:33:60:16:C7:96:5F:CB:\n      AB:F4:5C:12:31:8A:0E:FF:9D:F9:B1:06:94:1F:55:F8:\n      63:C9:06:7E:3B:95:03:42:09:46:76:5D:6E:41:86:8B:\n      CD:49:92:CD:30:59:2C:F7:B6:B1:92:AD:75:56:51:47:\n      F3:42:18:06:4F:79:29:F6:54:02:51:84:6D:C0:AD:97:\n      EF:86:57:20:DB:27:0A:B1:AC:25:B5:51:F8:AD:8F:61:\n      3E:B8:9C:ED:9C:58:59:2B:F1:F7:7A:66:00:EA:BA:F3:\n      E1:39:AB:B3:71:44:82:93:D1:CF:4F:65:7A:B0:C5:09:\n      2F:5B:1B:DB:74:3C:50:0B:59:D4:3F:D3:FC:B0:10:04:\n      EC:A0:A6:3D:86:E9:BC:F1:B3:B4:B3:86:B9:6C:51:C7:\n      41:21:24:AE:D0:72:29:A6:B2:DE:91:38:7D:95:AD:F5:\n      F7:B7:97:39:C3:71:48:41:96:FB:B5:62:B8:38:75:9F:\n      7B:CC:03:A1:BD:AD:2E:04:28:41:C6:02:D2:5D:53:63\n\nAuthority Key Identifier:\n  24:E8:53:57:5D:7C:34:40:87:A9:EB:94:DB:BA:E1:16:78:FC:29:A4\n\nSubject Key Identifier:\n  02:57:E2:D8:53:07:91:AB:7F:8C:F1:0A:B8:7F:B5:C9:3A:C0:F0:65\n\nCRL Distribution Points:\n  http://crl.cloudflare.com/origin_ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://ocsp.cloudflare.com/origin_ca\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Client Auth\n  Server Auth\n\nDNS Names:\n  activate.xix3d.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  7A:36:BA:FE:B9:D4:F4:65:9A:E1:93:E8:94:06:AF:F4:\n  D1:6D:2A:74:51:98:FE:BA:EB:CD:6D:E5:6A:9D:2B:A1:\n  D5:3C:F6:38:AC:DF:CD:2D:96:E0:4F:82:E5:ED:CC:4A:\n  92:8C:9D:F4:6E:78:C8:ED:8F:47:E6:A2:CD:70:CE:80:\n  70:AA:EE:4C:20:F4:4D:34:F7:08:73:1F:09:92:CF:57:\n  4C:A4:4F:9E:EB:B0:3F:8D:1D:D5:88:73:F7:3B:09:68:\n  CB:DB:CB:4F:5E:B2:7F:BC:E9:F1:92:B0:FC:D8:2C:6A:\n  10:D2:71:4A:1D:17:E5:33:E0:C1:84:F2:3D:D0:11:12:\n  49:3D:0D:54:C2:15:02:4F:6E:C7:59:85:58:DE:84:57:\n  AA:4B:EB:C9:64:E8:57:59:10:DC:2F:55:5D:EC:C3:42:\n  BA:AE:EC:B2:70:E1:44:17:61:26:87:9A:22:20:2D:00:\n  89:0D:53:DA:B7:02:8A:F3:C4:6E:BC:8D:39:23:ED:69:\n  EB:A3:49:0C:D7:4A:FC:38:65:1A:EA:3F:18:7E:B0:16:\n  12:70:58:80:AA:73:2B:00:94:2A:05:00:F2:1F:B4:E4:\n  F9:1B:E2:06:0E:2E:B2:94:7E:D0:31:B8:E5:60:61:7B:\n  5D:A1:51:0E:14:F3:3C:D9:EF:11:42:1C:CF:44:94:6E",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Tue, 27 Oct 2026 07:51:02 GMT\r\nServer: nginx/1.27.4\r\n",
+            "banner": "",
+            "certs_subject_org": "CloudFlare, Inc.",
+            "certs_subject_cn": "CloudFlare Origin Certificate"
+          },
+          {
+            "ip": "34.140.228.153",
+            "port": "443",
+            "protocol": "websocket(https)",
+            "host": "34.140.228.153:443",
+            "domain": "",
+            "title": "",
+            "server": "",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 38310330379079755185647969659868035950691296433\nSignature Algorithm: SHA256-RSA (self-signed)\n\nIssuer:\n  CommonName: sni-support-required-for-valid-ssl\n\nValidity:\n  Not Before: 2026-04-20 20:35 UTC\n  Not After : 2036-04-17 20:35 UTC\n\nSubject:\n  CommonName: sni-support-required-for-valid-ssl\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      B7:81:2F:8D:8C:F6:76:81:A0:3F:70:F3:86:54:CA:75:\n      34:F7:D9:79:68:A2:00:26:F8:8A:10:7D:F8:FF:9A:8A:\n      96:A4:52:D9:B4:77:6A:49:DD:6E:85:82:48:19:DB:D2:\n      B1:01:31:87:98:F7:D9:AA:DE:64:AF:53:12:D0:78:C9:\n      F4:D4:AE:93:04:63:00:B1:00:B5:87:F8:73:2B:40:36:\n      5B:DD:72:EE:8A:B6:C2:7F:EB:FD:F0:7F:BF:03:72:9F:\n      40:4A:23:02:64:AD:E8:5E:D8:CA:CA:EA:8E:41:77:F9:\n      3E:6A:22:D1:99:11:E1:7D:B1:5C:63:BA:17:11:4C:EA:\n      37:2D:F0:9E:13:B4:49:43:52:E0:15:27:F4:E3:FF:77:\n      8A:95:BB:C4:66:27:E0:0F:61:46:90:AB:A6:76:26:5A:\n      A4:79:C8:78:0C:D0:F2:55:64:AD:48:3C:63:A2:69:04:\n      C8:4A:D2:28:28:37:2E:BE:7B:1D:35:90:7F:89:1D:FB:\n      63:C7:B9:E3:0F:F3:FD:A3:03:35:4D:A7:44:52:CE:2D:\n      87:F5:65:0B:8D:63:BE:B3:EB:21:35:35:40:AE:9E:22:\n      8B:46:11:2A:FB:2C:D1:81:B7:28:65:1D:59:8D:96:1D:\n      A3:D6:F3:F4:F8:AE:F0:0B:65:3E:7B:AE:FB:0D:1F:DF\n\nAuthority Key Identifier:\n  28:95:DB:AA:A4:25:C1:27:C8:63:62:73:B7:95:D8:52:6B:F0:BD:BF\n\nSubject Key Identifier:\n  28:95:DB:AA:A4:25:C1:27:C8:63:62:73:B7:95:D8:52:6B:F0:BD:BF\n\nBasic Constraints:\n  CA : true\n  Path Length Constraint: UNLIMITED\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  08:37:0F:76:2D:C5:BE:F9:11:5B:7F:13:C1:4A:20:DC:\n  3A:6C:6A:AE:4B:FB:52:D6:4F:C3:02:BD:E1:EB:AF:74:\n  5B:60:C0:F8:6A:3E:0C:FB:41:CB:EE:57:8B:62:66:96:\n  76:15:36:06:61:99:C1:2B:5C:66:EA:1F:15:6C:3B:A1:\n  35:63:C9:C4:85:64:ED:63:4F:54:4D:85:ED:B1:AD:5E:\n  D2:56:24:9D:D6:5D:BF:55:8C:31:83:E4:1C:23:E3:F7:\n  C0:59:05:3D:38:3E:5A:D0:B3:B2:49:C7:E1:0C:49:D6:\n  38:FF:E8:FD:97:57:BF:90:E2:5F:AB:7A:99:FE:F6:44:\n  27:DD:9E:AD:4D:71:03:FB:7A:19:3D:AF:2C:EE:AA:69:\n  FE:1A:C2:F1:95:95:C3:0E:EC:E6:31:6C:E3:33:3A:51:\n  03:12:EA:93:A2:23:88:55:77:53:85:F4:71:76:57:14:\n  FC:A0:B4:94:86:6D:33:B0:D9:5B:51:6B:7E:39:FA:C9:\n  74:27:64:A5:1A:5C:28:BB:4B:C1:61:FF:FA:80:F8:4E:\n  1C:58:3C:28:F0:DA:74:45:FF:3A:E3:BC:84:58:20:32:\n  B3:08:F1:ED:78:D4:C2:33:C0:BA:6E:D8:C0:50:B9:CD:\n  BA:C1:64:74:B8:A3:C0:E2:71:2E:F0:B2:D6:FE:4E:E0",
+            "header": "",
+            "banner": "Transport: wss\nPath: /ws\nHTTP/1.1 101 Switching Protocols\nAccess-Control-Allow-Origin: *\nConnection: upgrade\nDate: Tue, 27 Oct 2026 07:50:58 GMT\nServer: openresty/1.29.2.3\nUpgrade: websocket\nVary: origin, access-control-request-method, access-control-request-headers\nHandshake: Sec-WebSocket-Accept valid\nSec-WebSocket-Accept: true\n",
+            "certs_subject_org": "",
+            "certs_subject_cn": "sni-support-required-for-valid-ssl"
+          },
+          {
+            "ip": "35.198.22.32",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://35.198.22.32",
+            "domain": "",
+            "title": "Grafana",
+            "server": "nginx/1.28.3 (Ubuntu)",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 27218397319608174540577407637\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: BE\n  Organization: GlobalSign nv-sa\n  CommonName: GlobalSign GCC R6 AlphaSSL CA 2025\n\nValidity:\n  Not Before: 2025-11-18 14:51 UTC\n  Not After : 2026-12-20 14:51 UTC\n\nSubject:\n  CommonName: *.cirandacultural.com.br\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      B1:47:4B:AE:6F:A7:25:87:67:F4:7C:11:FB:3F:EC:6F:\n      37:E6:A4:43:FB:EF:BD:53:69:E6:5A:BE:E9:05:13:5C:\n      01:41:52:06:72:11:49:A7:4A:82:84:13:CE:20:21:FB:\n      CA:20:6E:B0:30:57:06:15:4B:3F:FD:D8:50:E1:93:5A:\n      7B:24:E0:2E:60:0D:3E:01:F9:A2:A1:34:14:FF:79:B4:\n      CD:3A:0F:91:EC:DD:37:6F:09:1F:0C:9E:70:DB:B0:85:\n      2D:24:CB:82:D9:C4:4B:17:0D:71:ED:0A:2F:F9:33:CA:\n      1A:57:50:E9:84:A2:D2:3B:11:1F:4A:1F:ED:DC:D0:F2:\n      5D:07:8B:C3:39:3E:1D:54:E6:B4:9F:84:21:8B:25:15:\n      36:2B:4D:27:21:D8:99:8C:38:66:1F:FE:1F:96:5F:92:\n      AE:16:96:3E:D4:1F:8A:AB:9B:B4:61:DC:25:A0:B5:9D:\n      7A:B7:CF:80:FA:B1:75:A9:EE:6D:DC:1E:0F:5D:A6:AE:\n      A8:6B:83:F1:7A:A3:C2:7B:A3:B0:83:E5:76:56:27:61:\n      28:FB:1F:B3:13:6F:9A:09:0D:35:55:FE:51:31:B5:0D:\n      37:ED:BD:34:DF:24:85:99:C5:F9:40:73:35:53:15:A2:\n      B0:D4:58:F8:ED:D9:1B:15:4A:B7:F4:BC:EB:5A:9D:57\n\nAuthority Key Identifier:\n  C5:B4:93:8F:6F:2B:DC:1E:48:BF:B7:10:30:85:CE:D1:B2:BB:48:2D\n\nSubject Key Identifier:\n  25:48:D3:E7:A6:E0:8C:7D:3B:CE:59:66:C7:35:B3:FD:B8:F1:19:CD\n\nCRL Distribution Points:\n  http://crl.globalsign.com/gsgccr6alphasslca2025.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://ocsp.globalsign.com/gsgccr6alphasslca2025\n\nIssuing Certificate URL:\n  http://secure.globalsign.com/cacert/gsgccr6alphasslca2025.crt\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n  Client Auth\n\nDNS Names:\n  *.cirandacultural.com.br\n  cirandacultural.com.br\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  9D:0C:4D:B7:DA:54:AA:39:ED:AF:D9:3F:D8:4C:9E:8E:\n  BB:56:4A:A7:E2:07:07:32:89:F3:8A:A3:9B:00:70:73:\n  06:D2:1A:F1:14:9B:BB:52:98:06:6B:AD:23:90:A3:71:\n  37:67:20:0C:0C:E6:85:24:16:F9:F9:5D:09:04:52:42:\n  30:BC:B3:25:6F:D7:29:C7:13:33:88:F8:C2:39:86:C4:\n  CF:C0:DD:1E:28:78:86:F2:3C:0B:44:E0:B3:42:68:9F:\n  65:70:24:68:36:0A:9B:95:67:A0:E8:94:97:66:CB:C3:\n  91:30:C8:63:9E:26:F5:5B:0F:C2:18:10:03:26:6C:68:\n  DC:FF:8E:1E:0D:1D:A8:F1:ED:92:36:9F:26:62:21:E7:\n  88:4E:92:CB:F7:14:58:76:CB:88:56:F9:EE:F0:19:9A:\n  E3:6A:CE:7C:AA:CE:1C:0C:1C:DF:0A:F1:8F:7C:5A:6E:\n  28:17:CA:77:D4:31:10:8B:0A:72:9B:0E:2C:89:8D:7C:\n  03:86:51:83:38:5C:9B:C4:B1:32:13:5C:D8:EC:08:6E:\n  35:41:DB:B1:B4:E2:49:94:A0:78:EE:FD:81:B9:22:4F:\n  36:61:68:1B:5F:CA:3F:ED:61:78:F3:E5:B5:F8:57:BE:\n  62:D2:42:8B:1B:0A:42:46:A1:C6:B0:5B:E3:65:76:AF",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-store\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Tue, 27 Oct 2026 07:50:24 GMT\r\nServer: nginx/1.28.3 (Ubuntu)\r\nX-Content-Type-Options: nosniff\r\nX-Xss-Protection: 1; mode=block\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "*.cirandacultural.com.br"
+          },
+          {
+            "ip": "195.148.72.61",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://www.edition.fi",
+            "domain": "edition.fi",
+            "title": "301 Moved Permanently",
+            "server": "nginx",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 456565480201933751621897332160604494527227\nSignature Algorithm: ECDSA-SHA384\n\nIssuer:\n  Country: US\n  Organization: Let's Encrypt\n  CommonName: YE2\n\nValidity:\n  Not Before: 2026-10-22 08:13 UTC\n  Not After : 2027-01-20 08:13 UTC\n\nSubject:\n  CommonName: avustukset.tsv.fi\n\nSubject Public Key Info:\n  Public Key Algorithm: ECDSA\n  Public Key:\n    31:9D:41:FB:91:C3:A4:F5:24:58:CB:F6:CA:58:71:75:\n    6A:44:A6:CF:C1:43:EB:28:08:D8:1A:B8:4D:41:5B:31:\n    3E:2E:F5:5B:C2:F1:76:E9:61:29:42:AA:54:A9:F5:D3:\n    E2:A1:35:8A:C3:6B:BC:4B:04:10:55:AC:72:99:24:7D\n\nAuthority Key Identifier:\n  B9:59:F2:8E:CF:22:F0:86:D3:37:48:FF:76:14:18:BA:82:D8:55:87\n\nSubject Key Identifier:\n  A3:16:A4:0A:08:B4:A8:BA:6C:72:B6:88:6B:67:45:79:C1:FF:6F:2F\n\nCRL Distribution Points:\n  http://ye2.c.lencr.org/124.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nIssuing Certificate URL:\n  http://ye2.i.lencr.org/\n\nKey Usage:\n  Digital Signature\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  avustukset.tsv.fi\n\nCertificate Signature Algorithm: ECDSA-SHA384\nCertificate Signature:\n  30:66:02:31:00:9D:A5:62:25:20:AD:AD:AF:0D:16:6D:\n  1E:1E:FA:2D:E7:1A:7D:CB:D0:61:1B:F5:4B:3C:12:8B:\n  2B:0C:BB:DB:A4:FC:53:83:5F:66:EC:08:AF:72:46:37:\n  7A:3B:10:49:87:02:31:00:D2:D3:DE:DC:DC:D4:2C:1A:\n  30:61:B6:90:01:85:5B:87:FD:53:EF:85:37:53:37:31:\n  C2:20:89:09:1F:88:37:D3:86:1B:F0:EB:CA:C7:83:F6:\n  31:DB:6A:C6:5E:50:B9:CF",
+            "header": "HTTP/1.1 301 Moved Permanently\r\nConnection: close\r\nContent-Length: 162\r\nContent-Type: text/html\r\nDate: Tue, 27 Oct 2026 07:47:38 GMT\r\nLocation: https://avustukset.tsv.fi/\r\nServer: nginx\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "avustukset.tsv.fi"
+          },
+          {
+            "ip": "52.40.42.113",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://www.djiboutiairlines.com",
+            "domain": "djiboutiairlines.com",
+            "title": "djiboutiairlines.com for sale | Spaceship.com",
+            "server": "openresty",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 512964278674285419484554463386155032840813\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: US\n  Organization: Let's Encrypt\n  CommonName: YR1\n\nValidity:\n  Not Before: 2026-10-21 11:37 UTC\n  Not After : 2027-01-19 11:37 UTC\n\nSubject:\n  CommonName: djiboutiairlines.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DB:3E:AE:6B:D4:F9:6F:EF:63:38:EB:5D:9A:61:2B:40:\n      B5:2A:D5:B5:00:59:6E:CE:92:54:82:64:A5:08:2A:38:\n      0E:95:E6:5D:8E:72:4C:18:68:D7:11:93:53:52:2F:AF:\n      FA:07:D1:B6:58:1F:3B:CE:69:B1:E5:5E:33:41:31:E2:\n      E5:1A:C2:F1:58:CD:6D:E6:72:14:C0:DE:AC:91:BF:27:\n      FC:91:43:82:34:D0:4A:E4:F4:37:28:EE:48:0C:F6:10:\n      7D:5C:35:C9:CC:87:65:4A:7D:7A:20:72:2D:C4:66:CD:\n      39:82:59:2A:3D:C2:34:8A:4B:E3:F1:6D:CB:AA:98:7C:\n      D2:A8:E1:F8:19:70:40:3E:C4:A2:E8:18:68:F5:7D:0D:\n      B4:A6:93:40:36:88:FB:20:1B:D8:8E:DF:6B:33:2A:0C:\n      7E:82:9D:59:F7:28:EA:C8:DA:2C:91:42:76:E0:FF:F9:\n      A5:2E:1C:FE:41:B9:34:B1:38:3D:FE:E9:75:54:54:4C:\n      BB:D3:6D:F9:6F:08:16:D1:27:E7:4A:42:91:8E:5F:70:\n      E9:99:22:40:D0:64:CA:BC:09:94:87:7F:55:64:94:35:\n      A9:9B:B6:7B:7C:C9:DC:76:55:7C:2D:0A:1B:E6:7D:67:\n      A8:9A:60:11:15:C5:87:DF:6C:F3:BE:87:1B:1A:18:03\n\nAuthority Key Identifier:\n  1F:2F:35:BE:46:14:82:CD:40:B1:AE:79:2C:55:78:FA:F7:D4:68:FB\n\nSubject Key Identifier:\n  39:23:A3:AF:EB:C8:CE:BB:15:14:E9:90:D1:B3:DB:FC:2C:D7:46:B2\n\nCRL Distribution Points:\n  http://yr1.c.lencr.org/110.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nIssuing Certificate URL:\n  http://yr1.i.lencr.org/\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  djiboutiairlines.com\n  www.djiboutiairlines.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  29:A5:3D:7A:A4:D0:CB:6B:82:1B:2A:B5:B7:82:3F:32:\n  CF:2F:78:50:D2:0A:7A:81:25:4B:A8:B7:03:C3:DC:01:\n  72:CE:10:C7:22:D0:7B:BD:90:73:F3:74:B0:2A:DC:5B:\n  41:2A:02:53:50:24:E7:19:43:C7:DE:66:AB:1E:B8:9E:\n  7B:8E:D9:09:19:66:7E:75:5B:8A:DA:44:B1:27:0D:77:\n  68:31:3C:10:86:32:25:EE:D5:2D:3A:54:3C:88:8B:E6:\n  DB:29:FC:23:6C:E4:9A:CA:73:14:77:79:F2:B3:FF:94:\n  4A:1C:69:CF:42:B8:E0:39:B7:18:BE:14:B0:5F:6E:57:\n  A5:F5:A9:C6:5D:55:5B:27:1B:68:06:5C:DB:10:80:F9:\n  44:CB:1C:15:21:C4:71:36:58:1C:65:59:A0:96:3A:37:\n  94:CA:67:79:4C:E6:67:FB:80:75:D3:7D:18:05:F8:32:\n  5A:F4:8E:98:E6:C7:F6:AC:33:82:F9:6A:A4:F0:CF:29:\n  76:08:6C:30:41:1B:D0:58:F0:DC:68:8B:35:0A:A1:BF:\n  4D:D6:6F:50:C9:68:B1:13:0B:D2:5D:16:C3:BA:89:83:\n  BB:EA:2F:61:7C:03:65:1B:EC:41:93:71:2B:FF:1E:48:\n  85:D1:58:F8:71:C2:56:1E:97:3D:70:35:E4:77:66:B1",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 26364\r\nContent-Security-Policy: frame-ancestors 'self'\r\nContent-Type: text/html\r\nDate: Tue, 27 Oct 2026 07:48:29 GMT\r\nEtag: \"49ec83e8b26ea461157c504a6bcf8342\"\r\nLast-Modified: Fri, 23 Oct 2026 11:51:18 GMT\r\nReferrer-Policy: strict-origin-when-cross-origin\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31536000; includeSubDomains; preload\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Xss-Protection: 1; mode=block\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "djiboutiairlines.com"
+          },
+          {
+            "ip": "44.232.173.249",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://moneypit.de",
+            "domain": "moneypit.de",
+            "title": "moneypit.de for sale | Spaceship.com",
+            "server": "openresty",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 552228821176306397619848048524261072247021\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: US\n  Organization: Let's Encrypt\n  CommonName: YR1\n\nValidity:\n  Not Before: 2026-09-29 08:11 UTC\n  Not After : 2026-12-28 08:11 UTC\n\nSubject:\n  CommonName: moneypit.de\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      E9:FF:4E:51:66:32:31:0D:5B:99:D1:E1:39:C8:4D:2D:\n      2B:28:60:AC:55:76:DB:48:16:BB:0E:FA:53:F6:08:7E:\n      77:18:34:E6:55:C7:BC:AC:2C:9A:F7:2B:8B:6E:4A:FD:\n      E9:41:0B:AB:4E:46:55:93:58:D4:90:6D:9E:00:51:E8:\n      66:47:C4:49:A9:1D:3A:A6:6A:5B:9D:8C:DF:BD:40:A5:\n      EF:8A:67:B1:7C:F0:C8:13:5B:10:AD:90:45:50:12:5F:\n      63:78:1C:8B:85:2F:32:AE:9D:09:5D:09:38:0E:42:4D:\n      CC:9D:54:3B:15:EF:E4:5A:81:E3:A8:C5:B1:1E:D0:22:\n      E0:85:BB:F2:FB:B2:62:70:92:80:B9:B5:6F:59:78:BD:\n      9F:BF:31:B4:67:96:A8:21:6D:BF:E6:19:35:42:85:56:\n      2C:5B:0E:F8:D4:D3:C2:96:EE:33:9F:B7:3D:99:2C:F7:\n      5F:8C:15:E2:47:48:FB:4D:0D:C6:00:BD:D9:19:FF:FD:\n      BE:20:69:25:A5:AB:8E:11:D0:86:29:B3:DB:ED:27:65:\n      12:07:C7:7E:34:7A:D2:6E:D8:FF:60:D3:F2:14:29:E2:\n      7F:A9:23:2C:6D:23:F2:34:AE:31:AC:5C:0B:BC:4F:45:\n      0C:66:ED:25:E1:77:34:F1:4B:A1:DA:B2:86:C1:28:EB\n\nAuthority Key Identifier:\n  1F:2F:35:BE:46:14:82:CD:40:B1:AE:79:2C:55:78:FA:F7:D4:68:FB\n\nSubject Key Identifier:\n  E0:98:59:B2:54:FB:15:DA:0C:B6:39:AA:73:93:CD:E2:37:1D:7B:BE\n\nCRL Distribution Points:\n  http://yr1.c.lencr.org/110.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nIssuing Certificate URL:\n  http://yr1.i.lencr.org/\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  moneypit.de\n  www.moneypit.de\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  46:C6:8B:99:69:E1:1C:17:4A:E8:C6:7E:79:C6:CF:0B:\n  03:B2:9F:23:CC:CB:F2:20:A7:A4:A2:8D:A0:8B:D0:21:\n  9A:57:79:81:F8:FB:D3:42:C7:A3:53:3C:27:9F:AF:BE:\n  FE:B2:3A:B8:49:65:6C:9A:83:90:43:44:EB:6A:E3:EE:\n  6D:6D:3F:A5:BA:EA:79:AE:81:CD:79:89:DF:62:8D:A2:\n  4F:0A:69:37:87:DA:AD:D4:9A:7E:D3:E5:61:B2:C2:0F:\n  F0:7F:9B:C4:62:34:1E:0A:A8:82:07:51:78:40:5B:F4:\n  78:E7:E3:5E:0C:57:DB:8F:C2:2F:96:29:9A:D9:71:91:\n  65:FD:44:2A:4C:68:25:A4:B2:5D:3C:1C:49:52:43:1B:\n  A1:C4:7A:71:FB:EB:48:68:15:D3:85:15:04:C9:60:F6:\n  94:8D:EB:7D:13:09:E3:7D:7A:B3:41:51:77:72:7D:F3:\n  C1:DE:FB:8C:B2:1F:43:01:3B:04:71:EF:BF:36:F6:2A:\n  74:C9:17:32:D1:38:C3:A5:99:F5:57:C4:E1:34:88:1E:\n  1C:B4:74:B0:F5:E3:34:E9:AD:BA:A8:24:46:A5:6B:A5:\n  0C:FB:05:87:FE:EC:2A:A1:E9:7A:F2:CC:D1:D5:34:A3:\n  03:3C:8F:1A:0A:F8:29:CE:2A:94:67:4C:28:88:A7:84",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 20755\r\nContent-Security-Policy: frame-ancestors 'self'\r\nContent-Type: text/html\r\nDate: Tue, 27 Oct 2026 07:47:14 GMT\r\nEtag: \"a9dc02809198ac94d6e4ce01b4579c88\"\r\nLast-Modified: Mon, 26 Oct 2026 09:56:07 GMT\r\nReferrer-Policy: strict-origin-when-cross-origin\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31536000; includeSubDomains; preload\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Xss-Protection: 1; mode=block\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "moneypit.de"
+          },
+          {
+            "ip": "34.79.31.218",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://34.79.31.218",
+            "domain": "",
+            "title": "",
+            "server": "nginx/1.29.0",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 514695692681239755753211195284984199871754\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: US\n  Organization: Let's Encrypt\n  CommonName: R10\n\nValidity:\n  Not Before: 2025-07-24 11:41 UTC\n  Not After : 2025-10-22 11:41 UTC\n\nSubject:\n  CommonName: thenewwinderclausius.cloud.x-connect.bluectrl.io\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      D8:B5:66:7B:83:40:ED:0C:9B:D1:CF:77:74:31:63:94:\n      56:6B:50:B4:BD:60:E0:95:2C:C3:47:20:79:14:DB:C0:\n      85:23:92:6C:A1:C0:E4:BF:92:82:31:15:1B:0C:15:05:\n      80:50:02:ED:81:BD:69:F2:85:E4:AA:E9:70:45:6D:A9:\n      02:C8:04:30:19:4E:36:00:27:86:46:6C:D3:FC:B3:99:\n      36:2D:71:21:08:CF:A3:76:F5:59:2B:D8:5F:BC:E7:F0:\n      3F:44:47:BD:5C:66:95:82:C3:D8:20:A9:12:2E:F0:5A:\n      F9:6C:C7:7F:E6:36:5D:7F:60:F6:EB:19:6D:8F:DD:C8:\n      3A:70:1B:17:B7:90:E0:B9:5A:16:89:15:35:D4:B9:1C:\n      05:75:11:5A:56:77:32:3A:F3:2F:90:C4:90:3F:26:AD:\n      E1:12:74:13:BD:33:85:25:34:66:EF:9E:FB:57:53:43:\n      BD:6E:BB:DE:EE:74:5C:1B:1F:0B:D6:CA:90:01:C8:38:\n      51:70:61:4B:B7:D4:C0:24:D8:56:75:D7:7D:71:C7:57:\n      9D:E3:EF:5A:92:EE:53:43:C8:29:39:13:85:4F:00:AF:\n      92:4F:B2:4C:D6:5B:9E:DD:CB:A5:EF:0A:81:CB:5E:2E:\n      F0:AB:0F:DB:29:DC:2E:F8:66:7A:1E:0B:BA:FF:F1:75\n\nAuthority Key Identifier:\n  BB:BC:C3:47:A5:E4:BC:A9:C6:C3:A4:72:0C:10:8D:A2:35:E1:C8:E8\n\nSubject Key Identifier:\n  1C:CE:CB:1A:1B:F7:25:F9:98:DB:94:BE:B0:C2:AE:C9:15:9D:11:2B\n\nCRL Distribution Points:\n  http://r10.c.lencr.org/11.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nIssuing Certificate URL:\n  http://r10.i.lencr.org/\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n  Client Auth\n\nDNS Names:\n  thenewwinderclausius.cloud.x-connect.bluectrl.io\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  C2:6D:8B:81:F9:D4:8E:F9:17:E0:3B:51:35:60:7F:4E:\n  3B:44:29:82:14:A4:C9:2F:DD:6B:0D:55:A1:DD:13:AB:\n  EE:D5:CC:9C:89:80:4F:CC:54:28:29:17:CE:CD:50:FC:\n  8D:1C:D1:20:24:47:C8:47:0C:D0:79:40:2F:AF:19:77:\n  A0:BC:5B:E4:4F:36:91:C2:48:F1:D3:2F:00:BC:54:FF:\n  93:A3:D1:9F:5B:36:EA:5F:5D:A5:EF:E1:44:FB:A4:AF:\n  44:FB:F8:A4:AD:3A:D8:EA:CA:98:C1:B6:F1:AE:95:A6:\n  0E:0B:50:85:2B:9D:83:05:F3:AF:65:E5:F1:79:70:21:\n  34:BF:63:49:0E:FE:60:E1:14:F8:38:E3:EA:01:A6:F8:\n  1B:BF:F1:00:B0:24:76:61:64:AA:0C:BF:88:45:77:E6:\n  50:6A:3E:DF:27:8F:26:53:A7:EF:E0:AA:91:15:53:74:\n  9B:22:7E:6B:93:DA:4A:6F:83:E8:AF:2F:8C:90:A3:46:\n  FB:68:7B:A1:B9:3A:8D:D0:D4:51:55:1A:12:25:02:F2:\n  C3:C9:5A:AC:08:A0:32:22:C7:33:B7:40:60:0A:EE:84:\n  08:04:3B:95:7B:7D:A1:8C:3D:DC:EC:0A:A6:21:8C:4C:\n  C7:B0:0F:6C:FE:C1:97:C9:59:44:5D:07:83:0F:85:FF",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 49\r\nContent-Type: text/html; charset=utf-8\r\nDate: Tue, 27 Oct 2026 07:49:41 GMT\r\nServer: nginx/1.29.0\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "thenewwinderclausius.cloud.x-connect.bluectrl.io"
+          },
+          {
+            "ip": "54.37.66.4",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://54.37.66.4",
+            "domain": "",
+            "title": "Login",
+            "server": "nginx/1.31.6",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 9069979024759887985966703124546041561\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: GB\n  Organization: Sectigo Limited\n  CommonName: Sectigo Public Server Authentication CA DV R36\n\nValidity:\n  Not Before: 2026-08-18 00:00 UTC\n  Not After : 2027-03-04 23:59 UTC\n\nSubject:\n  CommonName: services.wattius.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      B1:61:37:41:8A:B7:77:C8:E1:4A:F1:EC:8B:9E:D4:7D:\n      DF:01:30:E3:A4:5A:CB:CF:83:21:74:31:5F:F9:9F:E9:\n      A4:9F:8A:90:ED:B1:BF:9F:79:51:26:EE:28:46:5C:F2:\n      DD:C3:7D:35:D2:47:04:A4:FB:BC:DE:81:DC:D6:F1:2B:\n      1F:A8:3A:13:CE:BE:15:84:4F:76:31:26:FB:BE:50:DB:\n      F0:3F:58:2F:E3:97:CE:6E:79:99:0A:5D:41:D2:E2:57:\n      CE:A2:06:5F:20:DD:95:26:01:25:86:A8:52:A3:C6:55:\n      D7:98:C9:8C:D2:4D:29:F1:42:B8:14:37:B0:3E:FF:90:\n      44:BC:5A:96:98:0D:0B:FA:3E:B1:28:F1:4E:25:0D:47:\n      8A:D0:DD:B8:6F:D3:D2:7E:CA:29:72:73:DE:09:A2:3A:\n      B6:25:83:50:A4:B9:C7:BA:8A:F3:B2:BF:64:C9:2C:64:\n      FC:71:9C:CE:58:B4:C9:4B:48:A4:8D:3D:B1:F9:14:EC:\n      4D:50:B4:45:8A:62:1D:A6:D9:2D:32:30:1E:ED:52:5E:\n      18:56:29:C8:37:3F:14:62:69:F9:B5:85:7F:62:04:88:\n      D6:36:09:F9:51:A3:95:89:88:C7:6D:E4:79:CB:9B:0A:\n      29:C6:D5:EF:9E:3B:37:DD:2F:F9:B8:A9:00:33:4F:B3\n\nAuthority Key Identifier:\n  68:C0:12:16:18:0E:AF:CE:F6:87:A6:32:57:A3:46:51:5D:CB:07:27\n\nSubject Key Identifier:\n  EA:FC:D4:F4:99:48:C3:D9:74:6A:DB:BB:62:E9:8B:09:22:73:BA:E2\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://ocsp.sectigo.com\n\nIssuing Certificate URL:\n  http://crt.sectigo.com/SectigoPublicServerAuthenticationCADVR36.crt\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n  Client Auth\n\nDNS Names:\n  services.wattius.com\n  www.services.wattius.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  1E:AC:FC:83:FF:84:CD:5E:88:30:5F:BC:BC:9C:03:F4:\n  9F:69:92:9B:2E:19:E7:6B:C7:87:27:63:F1:07:4E:CB:\n  29:16:C6:0F:44:F4:B1:30:46:3E:37:8D:46:A8:37:CD:\n  58:8F:82:9E:B0:F2:0B:ED:E2:06:74:3B:38:83:42:E7:\n  5E:D9:81:43:CF:09:16:7C:12:9B:C9:C7:7A:2A:B7:76:\n  D7:CA:2A:3F:FB:8B:01:4A:7A:95:9D:3E:4A:F8:B2:6D:\n  9F:76:F0:DA:A1:09:01:A4:44:AC:93:FB:A5:37:DA:97:\n  AF:31:E3:DD:63:5A:71:74:BA:89:CE:A4:3C:4D:BB:3E:\n  93:F2:00:6A:44:91:ED:81:CF:99:57:69:6A:A3:B0:14:\n  57:49:6F:B3:A6:95:86:C5:56:12:86:20:0F:60:20:D4:\n  10:77:8A:45:DB:0C:99:40:99:86:F6:1C:F5:96:EF:D4:\n  14:82:FB:C0:19:5F:88:5A:95:E6:51:72:86:C7:EA:95:\n  83:3C:7B:4D:B1:F3:60:D4:DB:77:0D:64:9B:CA:D2:1D:\n  FB:DE:8F:B2:08:90:CE:62:A7:90:6A:7E:D1:A6:4F:78:\n  EF:A2:00:E9:DC:ED:11:3E:1F:C0:CE:89:64:DA:6D:87:\n  F9:77:16:8F:B8:32:B4:31:77:2B:77:14:1A:AE:1F:31:\n  27:D6:46:59:D3:A8:18:F4:0D:52:7F:20:3C:5A:0C:B8:\n  F6:92:62:89:58:7F:DB:A8:22:E8:C9:2D:7F:44:83:11:\n  4C:81:78:BF:0A:54:51:D8:64:3D:FF:D8:24:06:7A:8A:\n  98:15:A2:40:33:D2:F3:4B:6F:0C:C7:73:60:CB:CF:F0:\n  C2:11:8B:75:45:6E:B0:2F:DF:75:22:1A:08:FB:3F:44:\n  4C:D3:2A:BD:A0:F0:91:35:66:2F:11:64:71:76:1D:B8:\n  E7:DE:A0:D5:8E:68:1A:58:87:1B:43:9D:A6:35:48:F9:\n  25:F4:D4:8C:15:38:1D:74:99:BC:59:64:37:62:3A:D8",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 48573\r\nCache-Control: private, no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html; charset=utf-8\r\nDate: Tue, 27 Oct 2026 07:49:29 GMT\r\nEtag: \"bgxe4s9a8311h9\"\r\nServer: nginx/1.31.6\r\nVary: Accept-Encoding\r\nX-Powered-By: Next.js\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "services.wattius.com"
+          },
+          {
+            "ip": "38.47.103.77",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://38.47.103.77",
+            "domain": "",
+            "title": "403 Forbidden",
+            "server": "nginx/1.31.3",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 131787895668836856680740553574422302128788301012\nSignature Algorithm: SHA256-RSA (self-signed)\n\nIssuer:\n  Country: AU\n  Province: Some-State\n  Organization: Internet Widgits Pty Ltd\n  CommonName: example.com\n\nValidity:\n  Not Before: 2026-02-03 13:03 UTC\n  Not After : 2126-01-10 13:03 UTC\n\nSubject:\n  Country: AU\n  Province: Some-State\n  Organization: Internet Widgits Pty Ltd\n  CommonName: example.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      C1:C8:4E:5A:A4:18:C3:7E:3C:60:7B:2D:2F:FF:9E:48:\n      9A:07:43:EA:74:C5:48:D8:02:AD:0E:26:94:77:98:3C:\n      FD:40:3D:AB:43:7D:2C:F5:E0:8C:02:EE:BE:30:EA:04:\n      8B:91:72:B4:36:F5:D3:A4:CC:4B:2D:8B:F8:B9:AE:2D:\n      39:06:97:CA:CC:8D:DD:16:D4:95:A5:ED:3B:34:6C:E0:\n      F4:7E:9B:D3:E0:79:A3:85:8E:44:61:E0:F3:98:F7:8F:\n      B9:DA:C9:47:D7:C9:79:9E:51:AC:56:2F:98:0A:4F:98:\n      08:F2:9C:A2:2C:4C:0D:11:E9:F6:3D:1E:45:45:02:AC:\n      52:1C:8B:55:D9:13:06:3D:74:59:A9:82:07:8C:62:AB:\n      95:79:77:58:C3:96:7C:20:A1:33:DD:1A:DD:B5:F7:F6:\n      3D:A2:87:26:04:6F:36:3E:F6:69:4A:D7:EA:5A:E9:2F:\n      9B:E4:8B:0B:3C:B1:2D:C7:19:79:76:33:ED:1D:12:AF:\n      62:95:FC:77:CC:DF:6A:59:6B:34:93:4A:DA:72:2F:31:\n      0D:00:BF:AC:24:79:E2:A1:B7:B0:3F:6C:B6:33:31:7F:\n      E2:53:A0:AD:86:FC:6F:CE:B6:86:4E:C3:D3:FD:DE:98:\n      3C:50:F6:70:50:33:7C:F9:12:71:A9:98:43:B9:BA:F5\n\nAuthority Key Identifier:\n  B4:11:73:5A:E5:20:2C:AE:18:D0:18:41:34:F6:58:17:18:9C:8A:68\n\nSubject Key Identifier:\n  B4:11:73:5A:E5:20:2C:AE:18:D0:18:41:34:F6:58:17:18:9C:8A:68\n\nBasic Constraints:\n  CA : true\n  Path Length Constraint: UNLIMITED\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  74:F1:D7:F4:07:41:51:DC:43:B8:C0:EF:6D:CA:C9:CF:\n  B4:D4:E0:86:84:01:5C:97:75:A3:86:AD:B3:BC:99:16:\n  A8:F0:7B:C0:3B:E4:F4:75:13:C7:61:9B:C0:9C:11:BB:\n  8E:66:F0:E5:B5:7E:30:31:0F:8A:9F:8F:1C:92:0E:E3:\n  E0:A0:B2:4F:63:72:4A:3F:D6:5B:37:5D:FA:6E:0C:47:\n  29:C9:2D:7F:7F:4A:AF:F0:1C:C3:51:72:5F:D7:F4:DE:\n  66:9C:31:A6:74:D2:8B:7F:D7:D1:A2:FE:11:E5:8A:9E:\n  DA:5A:6F:AF:CB:D3:7E:17:BC:17:08:56:84:D6:26:39:\n  AB:41:8D:5B:7F:1E:C3:D9:42:80:D8:10:9C:0F:92:5D:\n  22:9E:D2:23:59:8F:D2:D0:BB:23:89:3F:0C:99:6C:01:\n  52:61:BD:0E:D2:96:90:D1:98:DA:21:15:65:47:77:81:\n  FA:9C:48:8C:7E:D3:CF:D6:CE:2A:67:5D:D6:7C:6F:40:\n  44:29:41:A8:96:56:75:69:5A:25:1C:DE:64:4E:33:AE:\n  65:9E:80:D8:26:22:A2:64:DA:40:C6:9A:7E:A4:6E:79:\n  19:54:93:C5:9F:45:C4:56:30:A4:50:11:09:93:02:E4:\n  75:A6:85:9A:DB:9B:15:DE:D9:8F:A7:85:42:0F:3E:AC",
+            "header": "HTTP/1.1 403 Forbidden\r\nConnection: close\r\nContent-Length: 555\r\nContent-Type: text/html\r\nDate: Tue, 27 Oct 2026 07:49:25 GMT\r\nServer: nginx/1.31.3\r\nVary: Accept-Encoding\r\n",
+            "banner": "",
+            "certs_subject_org": "Internet Widgits Pty Ltd",
+            "certs_subject_cn": "example.com"
+          },
+          {
+            "ip": "20.205.204.226",
+            "port": "443",
+            "protocol": "https",
+            "host": "https://20.205.204.226",
+            "domain": "",
+            "title": "Dafoods",
+            "server": "nginx/1.24.0",
+            "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+            "cert": "Version:  v3\nSerial Number: 8207348512581328449822724369131634397\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: US\n  Organization: DigiCert Inc\n  Organizational Unit: www.digicert.com\n  CommonName: RapidSSL TLS RSA CA G1\n\nValidity:\n  Not Before: 2023-05-11 00:00 UTC\n  Not After : 2024-06-10 23:59 UTC\n\nSubject:\n  CommonName: daf-lp1.dafoods.com.sg\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      C1:D6:3B:8D:21:14:9F:DB:FC:A6:59:41:38:63:12:6A:\n      FA:C6:8A:0F:E5:DF:53:95:13:8F:81:F6:EC:8C:73:99:\n      86:60:57:21:15:EC:92:F6:97:53:A4:9C:1E:7E:CA:C7:\n      A9:C7:26:B2:23:A6:0B:E3:A6:4B:3C:19:7F:A5:52:7C:\n      DF:C0:64:FA:73:27:1A:1C:CB:B3:3A:87:DE:10:2A:48:\n      48:5D:EC:B0:4C:2A:55:6B:C8:0C:DD:FE:69:C3:48:DE:\n      CB:53:CE:90:D0:3A:3F:74:0B:A1:1F:7D:2B:AB:FF:DD:\n      6A:43:3C:E9:DD:8E:49:DE:49:74:F0:09:09:42:B0:17:\n      6D:ED:D0:94:E7:DE:98:B6:F2:C2:5F:A9:D9:C4:A9:83:\n      F6:12:82:A4:50:37:2E:02:9D:C6:0F:4B:A2:19:33:F5:\n      31:C3:A5:BF:47:CD:8B:0C:8F:31:F8:14:08:4D:AD:C6:\n      6C:01:5B:2D:D3:69:F1:83:DE:81:72:17:40:F1:BB:2B:\n      9C:6A:AC:76:E8:23:13:B9:AA:FA:59:B1:C8:3F:93:54:\n      3C:AB:EB:B3:25:8B:BF:BE:81:BC:03:1A:B1:3A:D2:08:\n      9C:E0:66:0C:1C:4B:EB:6C:AB:29:C7:96:CE:2D:66:7F:\n      0F:9D:D3:8D:59:20:14:2F:43:FA:B8:68:56:31:42:9F\n\nAuthority Key Identifier:\n  0C:DB:6C:82:49:0F:4A:67:0A:B8:14:EE:7A:C4:48:52:88:EB:56:38\n\nSubject Key Identifier:\n  95:67:76:50:26:58:0D:E1:00:6C:39:B5:4E:0C:78:C1:28:BD:95:B9\n\nCRL Distribution Points:\n  http://cdp.rapidssl.com/RapidSSLTLSRSACAG1.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://status.rapidssl.com\n\nIssuing Certificate URL:\n  http://cacerts.rapidssl.com/RapidSSLTLSRSACAG1.crt\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n  Client Auth\n\nDNS Names:\n  daf-lp1.dafoods.com.sg\n  www.daf-lp1.dafoods.com.sg\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  B3:C6:72:56:C6:13:B7:3C:7D:CA:D2:CA:F5:28:EB:7E:\n  28:E0:0C:84:8C:DA:2F:7E:0D:52:7E:2C:40:A8:82:A3:\n  88:EF:56:2E:AF:BC:00:68:B4:F5:D3:32:9E:14:F8:B3:\n  DC:5C:7F:7D:F8:D2:7F:07:2E:AA:7C:36:18:83:1D:96:\n  08:2E:07:48:CD:4C:9A:F4:F8:0C:3F:80:D3:A5:92:ED:\n  F6:F8:D3:22:56:30:BD:72:2F:41:CD:0C:5C:24:F7:B1:\n  68:14:26:F1:FA:44:B1:50:C5:68:9E:39:21:FC:53:76:\n  03:72:DF:C7:3F:EA:E8:AB:FF:42:0C:27:76:47:56:1E:\n  BE:E7:F8:94:58:00:D1:35:E0:7B:D1:76:84:0F:86:B0:\n  2F:F8:A2:9F:32:E3:49:47:B4:36:CF:E6:91:D0:2E:06:\n  25:2A:B3:4A:8E:D5:20:95:92:56:F7:12:6D:CF:48:19:\n  55:DB:01:4D:71:76:2D:88:F9:ED:35:A9:49:32:CF:9A:\n  89:CB:CD:93:DC:A6:FC:B5:A2:C2:DD:E2:A6:4C:BE:2A:\n  4A:F4:65:52:70:9F:7B:AD:D6:97:C4:9B:28:38:09:E9:\n  4A:D3:64:8B:D7:75:1E:A4:81:A8:B3:80:71:C8:46:D3:\n  7D:CB:E8:47:F0:E4:E3:1D:37:EA:5C:0F:B2:C4:98:A7",
+            "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, private\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Tue, 27 Oct 2026 07:49:21 GMT\r\nServer: nginx/1.24.0\r\nSet-Cookie: XSRF-TOKEN=eyJpdiI6IkxaWHp6VmkxVUo1YlUwSlJQTng4VGc9PSIsInZhbHVlIjoiUVE3QlhKVlQyMk9zbjFZMjV2bWs4ejl0ckFGNk9FWHpVMG00TU9MQmk1S2JxN1M1MnFUdmZabXBmQ2dBamY0MXRoS2FVN3ZseG1hWE42RUlJUG51bERXV2ZLWE9teXZuVmhvY2tnbEVsaVlla2Zpak01d1o2MEtcL2wzMjBjRU1QIiwibWFjIjoiMWE0Zjg1NDE3MjZkYzU4MDhhMWJhZDM4YWNjNjhiMzFkY2YzYTgyYTE1ZTRkOTdmZmQ4MmExOWZlYjIyMGRlZSJ9; expires=Tue, 27-Oct-2026 09:49:21 GMT; Max-Age=7200; path=/\r\nSet-Cookie: dafoods_session=eyJpdiI6IlV4WFk2a1R2dEtvR0pvU2c0cWV5dGc9PSIsInZhbHVlIjoiWEx0RWRIaStDT2I4THY5TzBcL0hKWlJNOHNTWXdyVU9qSWJoSVJiVFJ6eHRRenluTTNnUEpTcEJPQXZ5R2YrOEc2TTdGcWJtTWVTT3EwM3FOaFhHTklSY1d3b0M2alJBZVRRcG9LcUlyYmJPakx6TDZZTzVSdXczck9uZ0orRUxvIiwibWFjIjoiZjUyZTkzZWNlZjM0NzE4NmMxMTI5MzFmYWVjYTc3ODMzZWU4NTgyOGI5NzBhMGMzODkzMTJkOGY5NDRkNzgxNiJ9; expires=Tue, 27-Oct-2026 09:49:21 GMT; Max-Age=7200; path=/; httponly\r\nSet-Cookie: J5qacozBJY93T8qPBcTlCbf1B4VIwvJbcna26B1w=eyJpdiI6IjV4XC9lbGJSekorOERCNG8wNXNkNnRBPT0iLCJ2YWx1ZSI6IjdMTkQwRUhcL0VVZU9rTmdrc2hvdDhxT2VZM2U4MjRPQmJxTjU5b2JqNDdWelpBdnNIWFhSYmp3VEpsc1BBSEdKM0pSZDc3VFNKSGtVUzM3NXl3MUZBSEFPV3h1K0thU0VaSUdYZ3FcL0NwN3dBQ2xlbzl0SGJmYTRyY3dcL2xxTGN6R0QrUzhXRGRKRjVWakdhN1ZSTlwvZlNXeWhsSjVIU25hRFJyRnd3SHYydWhweHo5TkpjZXN1SkJ4b2Z1a2NvVkp1SHlWNUVlSHBOZTc2ZUhzYWRZaFhNaVRvRm9wWkRZeVJRUFpYd3owMlA3emd5a0hJVWo1UFFQMzFFT0ZjUzNCYzd6dTJybkxYdzExcEhubUsrbzBcL0lTSmVkdjBLZU5nclM4UHUrSERBYlFxYzV6WmtcL2NqUlZDU3huSklKRVJhcGtyVjlCMVpla1RwNFRwWE5UbVUwSHp6eGVCeStpR3J2VWtxMlZhMU0wNXdpcUZEK05Nak1PV0owY0dIZ2NxMSIsIm1hYyI6IjQ4N2Y5NjZlMjU0N2NhMTE5NjBlYTc0ODdkMmQxZmJhYWI4ZGYxZmMzMzdlZDliOGU5ODI1MDRiOWNkZDBjZjUifQ%3D%3D; expires=Tue, 27-Oct-2026 09:49:21 GMT; Max-Age=7200; path=/; httponly\r\nX-Powered-By: PHP/7.4.33\r\n",
+            "banner": "",
+            "certs_subject_org": "",
+            "certs_subject_cn": "daf-lp1.dafoods.com.sg"
+          }
+        ],
+        "returned": 10,
+        "partial": true
+      },
+      "cost": 1,
+      "total": 2861744,
+      "returned": 10,
+      "partial": true,
+      "retrieved_at": "2026-10-27T07:51:59.831298+00:00"
+    }
+  ],
+  "seed_assets": [
+    {
+      "ip": "188.190.29.126",
+      "port": "443",
+      "protocol": "https",
+      "host": "https://188.190.29.126",
+      "domain": "",
+      "title": "Home | RTX",
+      "server": "nginx/1.31.3",
+      "jarm": "21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f",
+      "cert": "Version:  v3\nSerial Number: 81628176171941507003526847276457465393\nSignature Algorithm: SHA256-RSA\n\nIssuer:\n  Country: CN\n  Organization: 泰尔认证中心有限公司\n  CommonName: TLC DV TLS CA\n\nValidity:\n  Not Before: 2025-12-23 10:23 UTC\n  Not After : 2026-12-23 10:23 UTC\n\nSubject:\n  CommonName: azure.uzrailwaystax.com\n\nSubject Public Key Info:\n  Public Key Algorithm: RSA\n  Public Key:\n    Exponent: 65537\n    Public Key Modulus: (2048 bits) :\n      DE:ED:4A:64:EB:85:14:D0:84:7A:2F:F1:3A:4B:1C:05:\n      F3:68:4D:9A:EF:E0:F4:2B:F4:FE:35:02:73:43:4C:A4:\n      99:FF:F3:91:0D:57:6C:3E:C3:02:35:6F:DD:9C:BB:2C:\n      33:1D:8D:61:34:F9:3F:47:84:68:19:2C:4E:A6:7A:51:\n      88:D2:B6:1C:B1:E9:54:F9:1A:99:84:78:08:C3:72:7E:\n      53:CF:86:D5:06:DA:72:B6:5C:BA:8C:57:93:68:9C:84:\n      23:AE:78:E6:A5:0D:26:3F:35:D4:02:A4:A7:1E:4A:61:\n      7A:18:5D:85:55:BB:FB:2E:78:66:16:70:B6:F4:EB:83:\n      70:40:8E:33:C7:08:00:82:14:58:DE:F7:CF:1D:16:CF:\n      CC:76:8D:CD:7F:C9:09:EE:1B:CC:1F:17:9E:CA:9B:35:\n      CA:2C:DE:61:58:59:88:5A:33:03:5D:E9:F8:CB:F2:FA:\n      E7:47:B9:2C:DB:47:43:F1:5F:66:41:2C:28:16:AB:28:\n      52:88:08:2B:C4:F2:EF:05:83:25:97:F3:3F:8B:79:07:\n      75:B3:A5:4B:68:E9:D4:FB:D4:4C:5B:3A:38:EF:DE:2B:\n      0C:C3:AF:94:88:7D:3F:03:66:74:09:E9:AC:BF:77:C3:\n      C2:BD:1A:9C:3B:4B:69:74:43:C1:D7:EF:D0:F9:2E:6B\n\nAuthority Key Identifier:\n  63:BD:AD:94:8C:C4:94:36:10:1F:A9:DB:75:1A:99:06:47:8D:3F:48\n\nCRL Distribution Points:\n  http://tlcdvtlsr34g2ca.crl.certum.pl/tlcdvtlsr34g2ca.crl\n\nBasic Constraints:\n  CA : false\n  Path Length Constraint: UNLIMITED\n\nOCSP Server:\n  http://tlcdvtlsr34g2ca.ocsp-certum.com\n\nIssuing Certificate URL:\n  http://tlcdvtlsr34g2ca.repository.certum.pl/tlcdvtlsr34g2ca.cer\n\nKey Usage:\n  Digital Signature\n  Key Encipherment\n\nExtended Key Usage:\n  Server Auth\n\nDNS Names:\n  azure.uzrailwaystax.com\n\nCertificate Signature Algorithm: SHA256-RSA\nCertificate Signature:\n  0E:D5:01:7F:18:9D:BD:B2:46:89:D3:1B:61:24:8E:38:\n  B5:37:F3:3F:B2:C0:D1:57:D7:82:F7:14:CF:81:14:68:\n  38:72:0A:15:F5:74:DE:46:26:F1:4E:3D:D3:B7:51:E0:\n  20:61:12:B1:62:6E:AD:7C:1D:7B:90:06:FF:BE:C8:B4:\n  4D:23:BA:F7:70:7E:CA:AA:FE:BB:00:31:C8:25:09:D0:\n  B6:A4:43:66:12:6D:5E:20:70:F3:FA:8E:0C:6B:C8:B7:\n  46:43:B6:24:9B:BD:48:1F:97:F7:EA:DB:EB:5F:B5:3F:\n  3E:2E:83:69:A5:38:CE:07:09:96:02:48:DE:ED:63:57:\n  BE:0F:7C:4D:F2:EE:D2:F4:1B:40:C8:CA:DF:DD:A3:BB:\n  BC:48:A5:7F:F6:0C:6A:19:C0:9F:AA:D0:54:35:04:0C:\n  38:FF:C1:A6:C0:D2:B0:B5:DF:C0:7D:38:15:D3:F9:5F:\n  5E:CB:F3:8D:F1:56:FB:6A:F9:05:C3:DA:62:5B:48:86:\n  0D:2A:68:6F:39:37:AC:87:C2:DA:61:81:E2:3C:90:EE:\n  3B:53:EE:C4:DF:AD:0B:A2:51:44:36:89:B2:52:84:8D:\n  24:F3:AC:5E:39:C6:2B:69:36:D5:E0:D7:71:F7:00:56:\n  D5:49:21:15:99:BE:F4:DB:8F:03:98:8C:FB:88:29:D9:\n  30:E6:03:6C:C6:3F:64:32:9E:46:EE:3B:83:42:C8:DE:\n  A7:55:AD:3A:2B:0A:9A:88:EC:0F:5D:5A:DB:D7:45:7E:\n  D2:45:2F:0D:88:A2:7B:B4:42:D0:7C:63:31:13:8D:51:\n  35:D6:B5:5D:D8:81:1A:D3:BB:E9:93:62:38:6B:6F:19:\n  D9:0F:F3:A7:5B:2B:BD:CE:27:DD:3B:E1:D9:82:00:9E:\n  FB:80:15:81:82:64:1B:3B:A9:E8:43:28:4B:65:1A:31:\n  8F:7E:75:A2:D9:13:F0:9D:33:D8:C4:3A:AE:ED:A1:01:\n  DB:47:87:80:E7:D1:23:46:76:3D:07:5C:35:60:1D:14:\n  B6:E5:C2:88:A6:BC:8F:E0:D0:F7:26:A1:A2:8C:86:62:\n  42:0C:0B:1A:85:08:D8:D3:A8:C0:89:C3:8C:32:E3:70:\n  86:D3:E6:D1:C5:7A:36:74:4C:12:D0:B8:2F:09:A8:9E:\n  86:02:9B:E1:AD:EA:01:19:CA:B7:9C:43:09:41:D5:BA:\n  F3:A5:43:6C:B6:E4:9C:40:A3:5B:DA:C0:5C:5E:D2:E2:\n  E4:FF:6A:6F:9B:82:66:4C:D8:A1:52:3A:3C:58:3E:BC:\n  F8:12:E6:15:05:37:44:31:78:3C:44:68:F4:CB:C1:E4:\n  2E:8B:A6:22:45:E4:06:AC:A4:81:38:96:E5:80:F6:10",
+      "header": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 55559\r\nContent-Type: text/html; charset=utf-8\r\nDate: Fri, 07 Aug 2026 21:38:13 GMT\r\nServer: nginx/1.31.3\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Nginx-Upstream-Cache-Status: EXPIRED\r\nX-Powered-By: PHP/5.5.38\r\nX-Server-Powered-By: AHOST SERVER3\r\nX-Xss-Protection: 1; mode=block\r\n",
+      "banner": "",
+      "certs_subject_org": "",
+      "certs_subject_cn": "azure.uzrailwaystax.com"
+    }
+  ],
+  "warnings": [
+    "Query budget exhausted; evidence and coverage are partial"
+  ],
+  "metrics": {
+    "api_calls": 4,
+    "cache_hits": 0,
+    "queries": 4,
+    "returned": 29,
+    "candidates": 9,
+    "budget_exhausted": true
+  },
+  "error": null,
+  "query_budget": 4,
+  "max_results": 10,
+  "use_llm": false,
+  "llm_selections": [],
+  "policy": {
+    "broad_total": 10000,
+    "broad_streak_limit": 2,
+    "skipped": [
+      {
+        "query": "header=\"Server: nginx/1.31.3\"",
+        "feature_ids": [
+          "f-095b3a23efc4d7d9ad663c46"
+        ],
+        "generic_penalty": 1,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "header=\"X-Powered-By: PHP/5.5.38\"",
+        "feature_ids": [
+          "f-4e40e4fee3b415c06a96dfa7"
+        ],
+        "generic_penalty": 1,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "port=\"443\"",
+        "feature_ids": [
+          "f-aad495e006fdd37d0e7b27c9"
+        ],
+        "generic_penalty": 1,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "protocol=\"https\"",
+        "feature_ids": [
+          "f-f499f2f452b9dfd2a9ada2f5"
+        ],
+        "generic_penalty": 1,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "server=\"nginx/1.31.3\"",
+        "feature_ids": [
+          "f-a3560066e979b17ae015e76e"
+        ],
+        "generic_penalty": 1,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "header=\"Server: nginx/1.31.3\" && port=\"443\"",
+        "feature_ids": [
+          "f-095b3a23efc4d7d9ad663c46",
+          "f-aad495e006fdd37d0e7b27c9"
+        ],
+        "generic_penalty": 2,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "header=\"Server: nginx/1.31.3\" && protocol=\"https\"",
+        "feature_ids": [
+          "f-095b3a23efc4d7d9ad663c46",
+          "f-f499f2f452b9dfd2a9ada2f5"
+        ],
+        "generic_penalty": 2,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "header=\"Server: nginx/1.31.3\" && server=\"nginx/1.31.3\"",
+        "feature_ids": [
+          "f-095b3a23efc4d7d9ad663c46",
+          "f-a3560066e979b17ae015e76e"
+        ],
+        "generic_penalty": 2,
+        "reason": "duplicate_server_evidence"
+      },
+      {
+        "query": "header=\"X-Powered-By: PHP/5.5.38\" && port=\"443\"",
+        "feature_ids": [
+          "f-4e40e4fee3b415c06a96dfa7",
+          "f-aad495e006fdd37d0e7b27c9"
+        ],
+        "generic_penalty": 2,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "header=\"X-Powered-By: PHP/5.5.38\" && protocol=\"https\"",
+        "feature_ids": [
+          "f-4e40e4fee3b415c06a96dfa7",
+          "f-f499f2f452b9dfd2a9ada2f5"
+        ],
+        "generic_penalty": 2,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "header=\"X-Powered-By: PHP/5.5.38\" && server=\"nginx/1.31.3\"",
+        "feature_ids": [
+          "f-4e40e4fee3b415c06a96dfa7",
+          "f-a3560066e979b17ae015e76e"
+        ],
+        "generic_penalty": 2,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "port=\"443\" && protocol=\"https\"",
+        "feature_ids": [
+          "f-aad495e006fdd37d0e7b27c9",
+          "f-f499f2f452b9dfd2a9ada2f5"
+        ],
+        "generic_penalty": 2,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "port=\"443\" && server=\"nginx/1.31.3\"",
+        "feature_ids": [
+          "f-aad495e006fdd37d0e7b27c9",
+          "f-a3560066e979b17ae015e76e"
+        ],
+        "generic_penalty": 2,
+        "reason": "weak_features_only"
+      },
+      {
+        "query": "protocol=\"https\" && server=\"nginx/1.31.3\"",
+        "feature_ids": [
+          "f-f499f2f452b9dfd2a9ada2f5",
+          "f-a3560066e979b17ae015e76e"
+        ],
+        "generic_penalty": 2,
+        "reason": "weak_features_only"
+      }
+    ],
+    "rejected": [
+      {
+        "query": "jarm=\"21d19d00021d21d00042d43d0000005ad20eceaf7f71ae0887d2ff117bf97f\"",
+        "feature_ids": [
+          "f-17a22d40ab8e9ea17d5d4e67"
+        ],
+        "generic_penalty": 0,
+        "reason": "broad_result",
+        "total": 2861744,
+        "returned": 10
+      }
+    ],
+    "offline_missing": [],
+    "stop_reason": null
+  },
+  "feedback": [
+    {
+      "seq": 42,
+      "task_id": "3d2a6f2f074a460597088da44c571185",
+      "candidate_id": "0e131a3d4b29f0bb0362fc06",
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。",
+      "created_at": "2026-10-27T07:58:08.877461+00:00"
+    },
+    {
+      "seq": 43,
+      "task_id": "3d2a6f2f074a460597088da44c571185",
+      "candidate_id": "6b733e168d1583f6cf080cf5",
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。",
+      "created_at": "2026-10-27T07:58:08.881396+00:00"
+    },
+    {
+      "seq": 44,
+      "task_id": "3d2a6f2f074a460597088da44c571185",
+      "candidate_id": "395c426ddb4e15f7e21fd15f",
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。",
+      "created_at": "2026-10-27T07:58:08.884457+00:00"
+    },
+    {
+      "seq": 45,
+      "task_id": "3d2a6f2f074a460597088da44c571185",
+      "candidate_id": "1643289972fdd3a64a729244",
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。",
+      "created_at": "2026-10-27T07:58:08.887386+00:00"
+    },
+    {
+      "seq": 46,
+      "task_id": "3d2a6f2f074a460597088da44c571185",
+      "candidate_id": "7e990f8710f957ae99dbd147",
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。",
+      "created_at": "2026-10-27T07:58:08.891351+00:00"
+    },
+    {
+      "seq": 47,
+      "task_id": "3d2a6f2f074a460597088da44c571185",
+      "candidate_id": "b0940b29cc56b710736f8bd2",
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。",
+      "created_at": "2026-10-27T07:58:08.894656+00:00"
+    },
+    {
+      "seq": 48,
+      "task_id": "3d2a6f2f074a460597088da44c571185",
+      "candidate_id": "700b49fd6b2649c0ddafba87",
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。",
+      "created_at": "2026-10-27T07:58:08.900160+00:00"
+    },
+    {
+      "seq": 49,
+      "task_id": "3d2a6f2f074a460597088da44c571185",
+      "candidate_id": "fec996bcd490fc1bb90e2ff0",
+      "decision": "related",
+      "attribution": "",
+      "note": "历史基础设施关联：本轮CN查询找回该IP，完整证书文本、序列号和签发机构与种子一致；原始研究亦列出同一IP。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。",
+      "created_at": "2026-10-27T07:58:08.903533+00:00"
+    },
+    {
+      "seq": 50,
+      "task_id": "3d2a6f2f074a460597088da44c571185",
+      "candidate_id": "f7de26c0ec219054217cbc3a",
+      "decision": "uncertain",
+      "attribution": "",
+      "note": "待定：本轮响应与种子完整证书文本一致，但原始研究未检索到该IP；可能是共享或迁移的基础设施，当前恶意性及归属未确认。 页面为通用502错误，不能用作独立关联依据。 来源：https://hunt.io/blog/silkparasite-spicerat-central-asia-infrastructure 。Codex辅助核对，非用户本人确认；未主动访问目标，供应商资产观测时间未知，HTTP Date不作为观测时间。",
+      "created_at": "2026-10-27T07:58:08.906606+00:00"
+    }
+  ]
+}
