@@ -5,6 +5,7 @@
 Uses Docker CLI, never changes ./data, and removes its own container on exit.
 """
 import argparse
+import http.client
 import json
 import os
 from pathlib import Path
@@ -41,51 +42,59 @@ def check_dashboard(request):
             'seed_import_and_review': True, 'external_api_calls': 0}
 
 
+def wait_for_response(request, path, timeout):
+    """Docker may accept TCP before the app is ready, then reset/disconnect."""
+    deadline = time.monotonic() + timeout
+    while True:
+        try:
+            return request(path)
+        except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.RemoteDisconnected):
+            if time.monotonic() >= deadline:
+                raise RuntimeError('Container did not become ready in time') from None
+            time.sleep(1)
+
+
 def run(image, timeout):
     if not shutil.which('docker'):
         raise RuntimeError('Docker CLI is required; install/start Docker before this check')
     name = 'z-hound-smoke-' + uuid.uuid4().hex[:12]
+    names = [name]
     with tempfile.TemporaryDirectory(prefix='z-hound-smoke-') as directory:
-        command = ['docker', 'run', '--detach', '--rm', '--name', name,
-                   '--publish', '127.0.0.1::8080', '--volume', str(Path(directory).resolve()) + ':/app/data']
-        if hasattr(os, 'getuid'):
-            command += ['--user', str(os.getuid()) + ':' + str(os.getgid())]
-        command.append(image)
+        def start(container_name):
+            command = ['docker', 'run', '--detach', '--rm', '--name', container_name,
+                       '--publish', '127.0.0.1::8080', '--volume', str(Path(directory).resolve()) + ':/app/data']
+            if hasattr(os, 'getuid'):
+                command += ['--user', str(os.getuid()) + ':' + str(os.getgid())]
+            subprocess.run(command + [image], check=True, capture_output=True, text=True)
+            address = subprocess.check_output(['docker', 'port', container_name, '8080/tcp'], text=True).strip()
+            return 'http://' + address
+
         try:
-            subprocess.run(command, check=True, capture_output=True, text=True)
-            address = subprocess.check_output(['docker', 'port', name, '8080/tcp'], text=True).strip()
-            base = 'http://' + address
+            base = start(name)
             def request(path, payload=None):
                 data = None if payload is None else json.dumps(payload).encode()
                 req = urllib.request.Request(base + path, data=data,
                                              headers={'Content-Type': 'application/json'})
                 with urllib.request.urlopen(req, timeout=5) as response:
                     return json.load(response)
-            deadline = time.monotonic() + timeout
-            while True:
-                try:
-                    request('/api/health')
-                    break
-                except (urllib.error.URLError, TimeoutError):
-                    if time.monotonic() >= deadline:
-                        raise RuntimeError('Container did not become healthy in time') from None
-                    time.sleep(1)
+            wait_for_response(request, '/api/health', timeout)
             result = check_dashboard(request)
             subprocess.run(['docker', 'restart', name], check=True, capture_output=True)
-            deadline = time.monotonic() + timeout
-            while True:
-                try:
-                    seeds = request('/api/hunting/seeds')['items']
-                    assert len(seeds) == 1 and seeds[0]['eligible'], 'Restart lost seed review'
-                    break
-                except (urllib.error.URLError, TimeoutError):
-                    if time.monotonic() >= deadline:
-                        raise RuntimeError('Container did not restart in time') from None
-                    time.sleep(1)
+            seeds = wait_for_response(request, '/api/hunting/seeds', timeout)['items']
+            assert len(seeds) == 1 and seeds[0]['eligible'], 'Restart lost seed review'
             result['restart_preserves_review'] = True
+            subprocess.run(['docker', 'stop', '--time', '5', name], check=True, capture_output=True)
+            names.append(name + '-recreated')
+            base = start(names[-1])
+            seeds = wait_for_response(request, '/api/hunting/seeds', timeout)['items']
+            assert len(seeds) == 1 and seeds[0]['eligible'], 'Container recreation lost seed review'
+            assert len(seeds[0]['history']) == 1, 'Container recreation lost review history'
+            assert request('/api/hunts')['items'] == []
+            result['recreated_container_preserves_review'] = True
             return result
         finally:
-            subprocess.run(['docker', 'stop', '--time', '5', name], capture_output=True)
+            for container_name in names:
+                subprocess.run(['docker', 'stop', '--time', '5', container_name], capture_output=True)
 
 
 if __name__ == '__main__':

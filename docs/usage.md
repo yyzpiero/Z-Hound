@@ -161,7 +161,7 @@ docker build -t z-hound:local .
 python3 tools/smoke_container.py --image z-hound:local
 ```
 
-The smoke check uses a temporary data directory and no API keys. It checks startup, empty hunting state, seed import/qualification, and preservation of the review after restart; it never queries FOFA or DeepSeek. `.github/workflows/container.yml` runs the same image check on Linux. A green workflow is required before publishing an image. The current development host has no Docker executable; image build/start has not been verified here.
+The smoke check uses a temporary data directory and no API keys. It checks startup, empty hunting state, seed import/qualification, and preservation of the review after restart and container recreation; it never queries FOFA or DeepSeek. `.github/workflows/container.yml` runs the same image check on Linux. A green workflow is required before publishing an image. The current development host has no Docker executable; image build/start has not been verified here.
 
 ### Build and copy to another machine
 
@@ -235,4 +235,3 @@ These are not implemented yet.
 
 1. **Database for IoCs (collector)** — The asset-discovery workspace has a separate SQLite store; CSV is the Z-Hunter collector source of truth today (`indicators.csv`, run snapshots, append-only decisions). A real store would make query, dedup, and dashboard filters cheaper than rewriting whole files, and would still need a migration path from the current masters.
 2. **Smarter audit, less human labour** — Review still depends on an analyst for mid-article / ambiguous extractions. Next work is ranking, clustering, and safer auto-accept rules so the queue shrinks without silently polluting the master table.
-

@@ -19,5 +19,5 @@ jobs:
         run: docker compose --env-file .env.example config --quiet
       - name: Build image
         run: docker build --tag z-hound:ci .
-      - name: Verify empty state, seed qualification and persistence
+      - name: Verify startup, seed qualification, restart and recreation
         run: python3 tools/smoke_container.py --image z-hound:ci
