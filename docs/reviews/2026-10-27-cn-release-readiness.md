@@ -11,9 +11,9 @@
 - Built the **0.3.0 wheel** from a clean temporary source copy, verified inclusion of hunting/certificate code, assessment JavaScript and seed template; no `.env` or hunting database in the wheel. Docker build context additionally excludes local hunting database/WAL files and environment variants.
 - Independent code review found no functional blockers. Its only remaining table-escaping comment was fixed.
 
-## Publication gates
+## Initial publication gates (subsequently satisfied)
 
-This machine has no Docker CLI/daemon. The image build, actual container smoke check and GitHub workflow execution remain **unverified**. Run:
+At this initial local checkpoint, the machine had no Docker CLI/daemon and container execution was unverified. Subsequent GitHub CI verified the Linux image build/start and persisted reviews across restart and recreation; see the [release validation](2026-10-27-v030-docker-release.md). Run:
 
 ```bash
 docker compose --env-file .env.example config --quiet
@@ -21,4 +21,4 @@ docker build --tag z-hound:local .
 python3 tools/smoke_container.py --image z-hound:local
 ```
 
-A green container check and integration of this development branch into the public release branch are required before announcing/publishing v0.3.0. No tag, registry image, push or GitHub release was created. A source archive is an inspection/install artifact, not evidence that Docker passed. Native fresh-state tests and mocked official transport tests do not substitute for a real official-account integration test.
+This checkpoint required a green container check and public-branch integration before publication. No tag or release existed at that point. Current version availability is recorded by the [v0.3.0 Release](https://github.com/yyzpiero/Z-Hound/releases/tag/v0.3.0). A source archive alone is not evidence that Docker passed. Native fresh-state tests and mocked official transport tests do not substitute for a real official-account integration test.

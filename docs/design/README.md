@@ -6,7 +6,7 @@ The local dashboard is a control room, not an admin template. Compare live scree
 - `z-hound-dashboard-light-zh.png`
 - `z-hound-dashboard-mobile-light-zh.png`
 
-`dashboard.png` is the original design figure. The root README now uses actual application screenshots in `docs/images/`: `dashboard.png` uses the dashboard test fixtures, and `hunting.png` shows the built-in synthetic demo, and `seeds.png` shows independent seed qualification with reserved synthetic indicators. None represents a live intelligence finding.
+`dashboard.png` is the original design figure. The root README uses `certificate-cn-live-case.png` and `spicerat-live-case.png`, captured from real API tasks. Development reference images `dashboard.png`, `hunting.png` and `seeds.png` use test fixtures or synthetic indicators and are labeled separately.
 
 ## Required language
 

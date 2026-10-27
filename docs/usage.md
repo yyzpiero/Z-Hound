@@ -130,7 +130,7 @@ The image includes the CLI and the dashboard. Chromium is in the image. **`data/
 **Dashboard** (default `docker compose up`):
 
 ```bash
-UID=$(id -u) GID=$(id -g) docker compose up --build
+env UID="$(id -u)" GID="$(id -g)" docker compose up --build
 ```
 
 Copy `.env.example` to `.env` and set `FOFA_API_KEY` before starting a real hunt. The default FOFA origin is official; `FOFA_EMAIL` is optional. `DEEPSEEK_API_KEY` enables optional feature prioritization. Editing `.env` requires `docker compose up -d --force-recreate dashboard`.
@@ -140,15 +140,15 @@ Open **[http://127.0.0.1:8080](http://127.0.0.1:8080)**. Stop with `docker compo
 **CLI menu** (interactive; `cli` is a Compose profile, so it does not start with `up`):
 
 ```bash
-UID=$(id -u) GID=$(id -g) docker compose run --rm cli
+env UID="$(id -u)" GID="$(id -g)" docker compose run --rm cli
 ```
 
 **CLI one-shot:**
 
 ```bash
-UID=$(id -u) GID=$(id -g) docker compose run --rm cli collect --lookback 3m
-UID=$(id -u) GID=$(id -g) docker compose run --rm cli validate-sources --max-pages 2 --max-reports 20
-UID=$(id -u) GID=$(id -g) docker compose run --rm cli list-sources
+env UID="$(id -u)" GID="$(id -g)" docker compose run --rm cli collect --lookback 3m
+env UID="$(id -u)" GID="$(id -g)" docker compose run --rm cli validate-sources --max-pages 2 --max-reports 20
+env UID="$(id -u)" GID="$(id -g)" docker compose run --rm cli list-sources
 ```
 
 Host publish is `127.0.0.1:8080:8080`. If mounted files are owned by you, pass `UID`/`GID` as above (image default is `1000:1000`). Proxy: `IOC_SCRAPER_PROXY` in the environment. The image sets `IOC_SCRAPER_DATA_DIR=/app/data` so collection writes to the mounted directory (a plain `pip install` inside the image does not keep the checkout path).
@@ -161,7 +161,7 @@ docker build -t z-hound:local .
 python3 tools/smoke_container.py --image z-hound:local
 ```
 
-The smoke check uses a temporary data directory and no API keys. It checks startup, empty hunting state, seed import/qualification, and preservation of the review after restart and container recreation; it never queries FOFA or DeepSeek. `.github/workflows/container.yml` runs the same image check on Linux. A green workflow is required before publishing an image. The current development host has no Docker executable; image build/start has not been verified here.
+The smoke check uses a temporary data directory and no API keys. It checks startup, empty hunting state, seed import/qualification, and preservation of the review after restart and container recreation; it never queries FOFA or DeepSeek. `.github/workflows/container.yml` runs the same image check on Linux. The v0.3.0 Linux amd64 image passed build, startup, restart and container-recreation checks in [GitHub Actions](https://github.com/yyzpiero/Z-Hound/actions/runs/40475190517). ARM64 builds were not exercised in that run.
 
 ### Build and copy to another machine
 

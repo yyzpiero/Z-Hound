@@ -7,6 +7,7 @@
 
 <p align="center">
   <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+"></a>
+  <a href="https://github.com/yyzpiero/Z-Hound/actions/workflows/container.yml"><img src="https://github.com/yyzpiero/Z-Hound/actions/workflows/container.yml/badge.svg?branch=main" alt="Docker CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-22c55e" alt="MIT License"></a>
   <a href="docs/dashboard.md"><img src="https://img.shields.io/badge/UI-English%20%2F%20中文-0057d9" alt="English / 中文"></a>
 </p>
@@ -46,11 +47,11 @@ Dashboard 支持中英文、深浅主题；CLI 适合批量采集和脚本调用
 
 ## 快速开始
 
-当前拓线代码尚未合并到公开默认分支，v0.3.0 也尚未发布；试用请使用包含本次改动的源码包。
-
-安装 **Docker Engine / Docker Desktop（含 Compose v2）**，下载本版源码并进入项目目录。首次运行：
+安装 **Docker Engine / Docker Desktop（含 Compose v2）**，获取 v0.3.0 源码：
 
 ```bash
+git clone --branch v0.3.0 --depth 1 https://github.com/yyzpiero/Z-Hound.git
+cd Z-Hound
 cp .env.example .env
 ```
 
@@ -105,7 +106,7 @@ ioc-scraper dashboard --host 127.0.0.1 --port 8080
 
 “运行离线演示”使用合成资产，供检查操作流程。也可下载[真实 CN 案例快照](docs/cases/certificate-cn-2026-10-27.json)，通过“导入回放快照”复查实际查询和研判；两种操作均不消耗 API。自己的实时查询结果会随供应商数据更新而变化。
 
-镜像构建、验证、导出和跨机器交付见[部署参考](docs/usage.md#docker)。当前拓线代码位于 `codex/hunter-integration`，尚未合并到公开默认分支，也尚未发布 v0.3.0 标签；发布前请使用包含本次代码的源码包。普通克隆公开默认分支不会自动获得这些未合并改动。
+镜像构建、验证、导出和跨机器交付见[部署参考](docs/usage.md#docker)。正式版本源码和安装包见 [v0.3.0 Release](https://github.com/yyzpiero/Z-Hound/releases/tag/v0.3.0)。Docker 镜像由本地源码构建，无需下载演示专用镜像。
 
 </details>
 
