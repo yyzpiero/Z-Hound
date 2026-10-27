@@ -60,14 +60,17 @@ def run(image, timeout):
     name = 'z-hound-smoke-' + uuid.uuid4().hex[:12]
     names = [name]
     with tempfile.TemporaryDirectory(prefix='z-hound-smoke-') as directory:
+        def endpoint(container_name):
+            address = subprocess.check_output(['docker', 'port', container_name, '8080/tcp'], text=True).strip()
+            return 'http://' + address
+
         def start(container_name):
             command = ['docker', 'run', '--detach', '--rm', '--name', container_name,
                        '--publish', '127.0.0.1::8080', '--volume', str(Path(directory).resolve()) + ':/app/data']
             if hasattr(os, 'getuid'):
                 command += ['--user', str(os.getuid()) + ':' + str(os.getgid())]
             subprocess.run(command + [image], check=True, capture_output=True, text=True)
-            address = subprocess.check_output(['docker', 'port', container_name, '8080/tcp'], text=True).strip()
-            return 'http://' + address
+            return endpoint(container_name)
 
         try:
             base = start(name)
@@ -79,7 +82,10 @@ def run(image, timeout):
                     return json.load(response)
             wait_for_response(request, '/api/health', timeout)
             result = check_dashboard(request)
+            previous_base = base
             subprocess.run(['docker', 'restart', name], check=True, capture_output=True)
+            base = endpoint(name)
+            result['restart_port_reassigned'] = base != previous_base
             seeds = wait_for_response(request, '/api/hunting/seeds', timeout)['items']
             assert len(seeds) == 1 and seeds[0]['eligible'], 'Restart lost seed review'
             result['restart_preserves_review'] = True
@@ -92,6 +98,12 @@ def run(image, timeout):
             assert request('/api/hunts')['items'] == []
             result['recreated_container_preserves_review'] = True
             return result
+        except Exception:
+            for container_name in names:
+                logs = subprocess.run(['docker', 'logs', '--tail', '80', container_name], capture_output=True, text=True)
+                if logs.returncode == 0:
+                    print(logs.stdout, logs.stderr, flush=True)
+            raise
         finally:
             for container_name in names:
                 subprocess.run(['docker', 'stop', '--time', '5', container_name], capture_output=True)
